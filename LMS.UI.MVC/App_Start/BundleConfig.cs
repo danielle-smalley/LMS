@@ -19,12 +19,20 @@ namespace LMS.UI.MVC
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                "~/Scripts/jquery.min.js",
+                "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap.bundle.min.js",
+                      "~/Scripts/respond.js",
+                      //"~/Scripts/jquery.min.js",
+                      "~/Scripts/isotope.pkgd.js",
+                      "~/Scripts/templatemo.js",
+                      "~/Scripts/custom.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/css/bootstrap.min.css",
+                      "~/Content/css/boxicon.min.css",
+                      "~/Content/css/templatemo.css",
+                      "~/Content/css/custom.css"));
         }
     }
 }
