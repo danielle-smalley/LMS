@@ -1,0 +1,18 @@
+﻿@model LMS.UI.MVC.Models.ContactViewModel
+
+@{
+    ViewBag.Title = "Email Confirmation";
+}
+
+
+
+<div class="container col-md-12 text-center">
+    <h2>@ViewBag.Title</h2>
+    <h4>We received the following message: </h4>
+    <p>@Model.Message</p>
+    <h4>We will respond as soon as we can to @Model.Email  . Thank you for contacting our team!</h4>
+    <img src="~/Content/img/emailconfirm.jfif" height="400" width="300" />
+    <br/>
+    <br/>
+    <br/>
+</div>
