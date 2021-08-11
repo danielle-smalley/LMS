@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace LMS.UI.MVC.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, HRAdmin")]
     public class RolesAdminController : Controller
     {
         public RolesAdminController()
