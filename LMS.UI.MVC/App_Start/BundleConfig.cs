@@ -20,7 +20,6 @@ namespace LMS.UI.MVC
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/jquery.min.js",
-                "~/Scripts/bootstrap.js",
                       "~/Scripts/bootstrap.bundle.min.js",
                       "~/Scripts/respond.js",
                       //"~/Scripts/jquery.min.js",

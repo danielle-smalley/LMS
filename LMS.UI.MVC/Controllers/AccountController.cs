@@ -158,6 +158,7 @@ namespace LMS.UI.MVC.Controllers
                     newUserDeets.UserId = user.Id;
                     newUserDeets.FirstName = model.FirstName;
                     newUserDeets.LastName = model.LastName;
+                    UserManager.AddToRole(user.Id, "Employee");
 
                     LMSEntities db = new LMSEntities();
                     db.UserDetails.Add(newUserDeets);

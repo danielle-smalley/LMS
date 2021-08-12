@@ -95,7 +95,7 @@ namespace LMS.DATA.EF
         public bool IsActive { get; set; }
     }
     [MetadataType(typeof(LessonMetadata))]
-    public partial class LessonCompletion
+    public partial class Lesson
     {
 
     }
@@ -121,7 +121,7 @@ namespace LMS.DATA.EF
     }
 
     [MetadataType(typeof(LessonViewMetadata))]
-    public partial class LessonViewCompletion
+    public partial class LessonView
     {
 
     }
