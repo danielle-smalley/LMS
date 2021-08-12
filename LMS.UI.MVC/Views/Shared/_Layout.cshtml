@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-     <!--TODO: make sure title, favicon, company/employer name get updated everywhere here (header & footer)-->
-    <title>Purple Buzz HTML Template with Bootstrap 5 Beta 1</title>
+    <!--TODO: make sure title, favicon, company/employer name get updated everywhere here (header & footer)-->
+    <title>Coding Bootcamp Survival Kit</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @*<link rel="apple-touch-icon" href="assets/img/apple-icon.png">*@
@@ -24,9 +24,9 @@
     <!-- Header -->
     <nav id="main_nav" class="navbar navbar-expand-lg navbar-light bg-white shadow">
         <div class="container d-flex justify-content-between align-items-center">
-            <a class="navbar-brand h1" href="~/Views/Home/Index.cshtml">
+            <a class="navbar-brand h1" href="@Url.Action("Index", "Home")">
                 <i class='bx bx-buildings bx-sm text-dark'></i>
-                <span class="text-dark h4">Employer</span> <span class="text-primary h4">Name</span>
+                <span class="text-dark h4">Coding Bootcamp </span> <span class="text-primary h4"> Survival Kit </span>
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-toggler-success" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -34,28 +34,94 @@
 
             <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="navbar-toggler-success">
                 <div class="flex-fill mx-xl-5 mb-2">
-                    <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-center text-dark">
-                        <li class="nav-item">
-                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="~/Views/Home/Index.cshtml">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="~/Views/Home/About.cshtml">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="work.html">Work</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="pricing.html">Pricing</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="~/Views/Home/Contact.cshtml">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="navbar align-self-center d-flex">
-                    <a class="nav-link" href="#"><i class='bx bx-bell bx-sm bx-tada-hover text-primary'></i></a>
-                    <a class="nav-link" href="#"><i class='bx bx-cog bx-sm text-primary'></i></a>
-                    <a class="nav-link" href="#"><i class='bx bx-user-circle bx-sm text-primary'></i></a>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-center text-dark">
+                            <li class="nav-item">
+                                <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Index", "Home")">Home</a>
+                            </li>
+                            @*<li class="nav-item">
+            <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Index", "Courses")">Courses</a>
+        </li>*@
+                            <!--Within courses, do drop down for completed courses, active courses, and archived courses-->
+                            @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager") || User.IsInRole("Employee"))
+                            {
+                                <li class="nav-item dropdown btn-outline-primary rounded-pill px-3">
+                                    <a class="nav-item dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Courses
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="@Url.Action("Index", "Courses")">Courses</a>
+                                        <a class="dropdown-item" href="@Url.Action("Index", "CourseCompletions")">Completed Courses</a>
+                                    </div>
+                                </li>
+                            }
+                            @*<li class="nav-item">
+            <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Index", "CourseCompletions")">Completed Courses</a>
+        </li>*@
+                            @*<li class="nav-item">
+            <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Index", "Lessons")">Lessons</a>
+        </li>*@
+                            <!--Within lessons, do drop down for completed lessons, active lessons, and archived lessons-->
+                            @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager") || User.IsInRole("Employee"))
+                            {
+                                <li class="nav-item dropdown btn-outline-primary rounded-pill px-3">
+                                    <a class="nav-item dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Lessons
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="@Url.Action("Index", "Lessons")">Lessons</a>
+                                        <a class="dropdown-item" href="@Url.Action("Index", "LessonViews")">LessonViews</a>
+                                    </div>
+                                </li>
+                            }
+                            @*<li class="nav-item">
+            <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Index", "LessonViews")">Completed Lessons</a>
+        </li>*@
+                            @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager") || User.IsInRole("Employee"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Index", "UserDetails")">User Details</a>
+                                </li>
+                            }
+
+                            <li class="nav-item">
+                                <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Contact", "Home")">Contact</a>
+                            </li>
+
+                            @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
+                            {
+                                <li class="nav-item dropdown btn-outline-primary rounded-pill px-3">
+                                    <a class="nav-item dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Admin
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="@Url.Action("Index", "RolesAdmin")">Roles</a>
+                                        <a class="dropdown-item" href="@Url.Action("Index", "UsersAdmin")">Users</a>
+                                    </div>
+                                </li>
+                            }
+                            @*<li class="nav-item dropdown-menu">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
+                <a class="dropdown-item" href="@Url.Action("Index", "RolesAdmin")">Roles</a>
+                <a class="dropdown-item" href="@Url.Action("Index", "UsersAdmin")">Users</a>
+            </div>
+        </li>*@
+                            <!--Have a dropdown for Admin that houses the Users & Roles-->
+                            @*<li class="nav-item">
+            <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Index", "UsersAdmin")">Users</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Index", "RolesAdmin")">Roles</a>
+        </li>*@
+                            @Html.Partial("_LoginPartial")
+                        </ul>
+                    </div>
+                    @*<div class="navbar align-self-center d-flex">
+                            <a class="nav-link" href="#"><i class='bx bx-bell bx-sm bx-tada-hover text-primary'></i></a>
+                            <a class="nav-link" href="#"><i class='bx bx-cog bx-sm text-primary'></i></a>
+                            <a class="nav-link" href="#"><i class='bx bx-user-circle bx-sm text-primary'></i></a>
+                        </div>*@
                 </div>
             </div>
         </div>
@@ -71,7 +137,7 @@
                 <div class="col-lg-3 col-12 align-left">
                     <a class="navbar-brand" href="#">
                         <i class='bx bx-buildings bx-sm text-light'></i>
-                        <span class="text-light h5">Company</span> <span class="text-light h5 semi-bold-600">Name</span>
+                        <span class="text-light h5">Coding Bootcamp </span> <span class="text-light h5 semi-bold-600"> Survival Kit </span>
                     </a>
                     <p class="text-light my-lg-4 my-2">
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit,
@@ -108,24 +174,25 @@
 
                 <div class="col-lg-3 col-md-4 my-sm-0 mt-4">
                     <h3 class="h4 pb-lg-3 text-light light-300">
-                        Our Company</h3>
-                        <ul class="list-unstyled text-light light-300">
-                            <li class="pb-2">
-                                <i class='bx-fw bx bxs-chevron-right bx-xs'></i><a class="text-decoration-none text-light" href="index.html">Home</a>
-                            </li>
-                            <li class="pb-2">
-                                <i class='bx-fw bx bxs-chevron-right bx-xs'></i><a class="text-decoration-none text-light py-1" href="about.html">About Us</a>
-                            </li>
-                            <li class="pb-2">
-                                <i class='bx-fw bx bxs-chevron-right bx-xs'></i><a class="text-decoration-none text-light py-1" href="work.html">Work</a>
-                            </li>
-                            <li class="pb-2">
-                                <i class='bx-fw bx bxs-chevron-right bx-xs'></i></i><a class="text-decoration-none text-light py-1" href="pricing.html">Price</a>
-                            </li>
-                            <li class="pb-2">
-                                <i class='bx-fw bx bxs-chevron-right bx-xs'></i><a class="text-decoration-none text-light py-1" href="contact.html">Contact</a>
-                            </li>
-                        </ul>
+                        Our Company
+                    </h3>
+                    <ul class="list-unstyled text-light light-300">
+                        <li class="pb-2">
+                            <i class='bx-fw bx bxs-chevron-right bx-xs'></i><a class="text-decoration-none text-light" href="index.html">Home</a>
+                        </li>
+                        <li class="pb-2">
+                            <i class='bx-fw bx bxs-chevron-right bx-xs'></i><a class="text-decoration-none text-light py-1" href="about.html">About Us</a>
+                        </li>
+                        <li class="pb-2">
+                            <i class='bx-fw bx bxs-chevron-right bx-xs'></i><a class="text-decoration-none text-light py-1" href="work.html">Work</a>
+                        </li>
+                        <li class="pb-2">
+                            <i class='bx-fw bx bxs-chevron-right bx-xs'></i></i><a class="text-decoration-none text-light py-1" href="pricing.html">Price</a>
+                        </li>
+                        <li class="pb-2">
+                            <i class='bx-fw bx bxs-chevron-right bx-xs'></i><a class="text-decoration-none text-light py-1" href="contact.html">Contact</a>
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="col-lg-3 col-md-4 my-sm-0 mt-4">
@@ -170,12 +237,17 @@
         <div class="w-100 bg-primary py-3">
             <div class="container">
                 <div class="row pt-2">
-                    <div class="col-lg-6 col-sm-12">
+                    <div class="col-lg-4 col-sm-8">
                         <p class="text-lg-start text-center text-light light-300">
                             © Copyright @DateTime.Now.Year  Danielle Smalley. All Rights Reserved.
                         </p>
                     </div>
-                    <div class="col-lg-6 col-sm-12">
+                    <div class="col-lg-4 col-sm-2">
+                        <p class="text-center text-light light-300">
+                            <a class="text-center text-light light-300" href="#">Back To Top</a>
+                        </p>
+                    </div>
+                    <div class="col-lg-4 col-sm-8">
                         <p class="text-lg-end text-center text-light light-300">
                             Template by <a rel="sponsored" class="text-decoration-none text-light" href="https://templatemo.com/" target="_blank"><strong>TemplateMo</strong></a>
                         </p>
@@ -191,13 +263,13 @@
     @Scripts.Render("~/bundles/bootstrap")
 
     <script>
-        $(window).load(function() {
+        $(window).load(function () {
             // init Isotope
             var $projects = $('.projects').isotope({
                 itemSelector: '.project',
                 layoutMode: 'fitRows'
             });
-            $(".filter-btn").click(function() {
+            $(".filter-btn").click(function () {
                 var data_filter = $(this).attr("data-filter");
                 $projects.isotope({
                     filter: data_filter
