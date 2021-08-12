@@ -159,6 +159,9 @@ namespace LMS.UI.MVC.Controllers
                     newUserDeets.FirstName = model.FirstName;
                     newUserDeets.LastName = model.LastName;
 
+                    LMSEntities db = new LMSEntities();
+                    db.UserDetails.Add(newUserDeets);
+                    db.SaveChanges();
 
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
