@@ -1,14 +1,13 @@
 ﻿@model LMS.DATA.EF.Course
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Course Details";
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>Course</h4>
-    <hr />
+
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.CourseName)
@@ -39,7 +38,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CourseImg)
+            @*@Html.DisplayFor(model => model.CourseImg)*@
+            <img src="@Url.Content("~/Content/img/" + Model.CourseImg)" alt="@Model.CourseName" />
         </dd>
 
     </dl>

@@ -1,14 +1,13 @@
 ﻿@model LMS.DATA.EF.Lesson
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Lesson Details";
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>Lesson</h4>
-    <hr />
+
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.LessonTitle)
@@ -31,15 +30,28 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.VideoURL)
+            @*@Html.DisplayFor(model => model.VideoURL)*@
+            @if (Model.VideoURL == null)
+            {
+                <div>
+                    <p>No video for this lesson; please just view PDF</p>
+                </div>
+            }
+            else
+            {
+                <iframe id="ytplayer" typeof="text/html" width="640" height="360" src="@Model.VideoURL" frameborder="0"></iframe>
+            }
+
         </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.PdfFile)
+            @*<a href="@Url.Content("~/Content/img/pdf/" + @Model.PdfFile)" target="_blank">Click For Lesson PDF</a>*@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PdfFile)
+            @*@Html.DisplayFor(model => model.PdfFile)*@
+            <a href="@Url.Content("~/Content/img/pdf/" + @Model.PdfFile)" target="_blank">Click For Lesson PDF</a>
         </dd>
 
         <dt>

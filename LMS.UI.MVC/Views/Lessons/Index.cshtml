@@ -17,15 +17,15 @@
         <th>
             @Html.DisplayNameFor(model => model.LessonDesc)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.VideoURL)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PdfFile)
-        </th>
-        <th>
+        </th>*@
+        @*<th>
             @Html.DisplayNameFor(model => model.IsActive)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Cours.CourseName)
         </th>
@@ -40,15 +40,18 @@
         <td>
             @Html.DisplayFor(modelItem => item.LessonDesc)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.VideoURL)
-        </td>
-        <td>
+        </td>*@
+        @*<td>
             @Html.DisplayFor(modelItem => item.PdfFile)
-        </td>
-        <td>
+        </td>*@
+        @*<td>
+            <a href="@Url.Content("~/Content/img/pdf/" + @item.PdfFile)" target=" _blank">Click for Lesson PDF</a>
+        </td>*@
+        @*<td>
             @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Cours.CourseName)
         </td>

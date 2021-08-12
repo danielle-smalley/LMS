@@ -49,10 +49,33 @@ namespace LMS.UI.MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, HRAdmin")]
-        public ActionResult Create([Bind(Include = "CourseId,CourseName,CourseDescription,IsActive,CourseImg")] Course course)
+        public ActionResult Create([Bind(Include = "CourseId,CourseName,CourseDescription,IsActive,CourseImg")] Course course, HttpPostedFileBase courseImg)
         {
             if (ModelState.IsValid)
             {
+                string imageName = "noImage.png";
+                if (courseImg != null)
+                {
+                    imageName = courseImg.FileName;
+
+                    string ext = imageName.Substring(imageName.LastIndexOf('.'));
+
+                    string[] goodExts = { ".jpg", ".jpeg", ".png", ".gif", ".jfif" };
+
+                    if (goodExts.Contains(ext.ToLower()))
+                    {
+                        courseImg.SaveAs(Server.MapPath("~/Content/img/" + imageName));
+                    }
+                    else
+                    {
+                        imageName = "noImage.png";
+                    }
+                }
+                course.CourseImg = imageName;
+
+
+
+
                 db.Courses.Add(course);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -83,16 +106,35 @@ namespace LMS.UI.MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, HRAdmin")]
-        public ActionResult Edit([Bind(Include = "CourseId,CourseName,CourseDescription,IsActive,CourseImg")] Course course)
+        public ActionResult Edit([Bind(Include = "CourseId,CourseName,CourseDescription,IsActive,CourseImg")] Course course, HttpPostedFileBase courseImg)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(course).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                string imageName = "noImage.png";
+                if (courseImg != null)
+                {
+                    imageName = courseImg.FileName;
+
+                    string ext = imageName.Substring(imageName.LastIndexOf('.'));
+
+                    string[] goodExts = { ".jpg", ".jpeg", ".png", ".gif", ".jfif" };
+
+                    if (goodExts.Contains(ext.ToLower()))
+                    {
+                        courseImg.SaveAs(Server.MapPath("~/Content/img/" + imageName));
+                    }
+                    else
+                    {
+                        imageName = "noImage.png";
+                    }
+                }
+                course.CourseImg = imageName;
             }
-            return View(course);
+            db.Entry(course).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
+
 
         // GET: Courses/Delete/5
         [Authorize(Roles = "Admin, HRAdmin")]

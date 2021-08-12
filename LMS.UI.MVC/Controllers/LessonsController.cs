@@ -52,18 +52,56 @@ namespace LMS.UI.MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, HRAdmin")]
-        public ActionResult Create([Bind(Include = "LessonId,LessonTitle,CourseId,LessonDesc,VideoURL,PdfFile,IsActive")] Lesson lesson)
+        public ActionResult Create([Bind(Include = "LessonId,LessonTitle,CourseId,LessonDesc,VideoURL,PdfFile,IsActive")] Lesson lesson, HttpPostedFileBase pdfFile)
         {
-            if (ModelState.IsValid)
-            {
-                db.Lessons.Add(lesson);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName", lesson.CourseId);
-            return View(lesson);
+            if (lesson.VideoURL.Contains("/watch"))
+            {
+                lesson.VideoURL = lesson.VideoURL.Replace("/watch?v=", "/embed/");
+            }
+            db.Lessons.Add(lesson);
+            db.SaveChanges();
+
+
+                if (ModelState.IsValid)
+                {
+                    //establish a variable for our default image
+                    string fileName = "noPdf.pdf";
+                    //if a file was sent
+                    if (pdfFile != null)
+                    {
+                        //reassign the variable to the filename sent over
+                        fileName = pdfFile.FileName;
+
+                        //create a variable for pdf extension
+                        string ext = fileName.Substring(fileName.LastIndexOf('.'));
+
+                        //create list of extensions
+                        string[] goodExts = { ".pdf" };
+
+                        //if ext is valid, assign a GUID as the name and concatonate ext
+                        if (goodExts.Contains(ext.ToLower()))
+                        {
+                            pdfFile.SaveAs(Server.MapPath("~/Content/img/pdf/" + fileName));
+                        }//end inner if
+                        else
+                        {
+                            fileName = "noPdf.pdf";
+                        }//end else
+
+                    }//end outer if
+
+                    lesson.PdfFile = fileName;
+
+                    db.Lessons.Add(lesson);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName", lesson.CourseId);
+                return View(lesson);
         }
+
 
         // GET: Lessons/Edit/5
         [Authorize(Roles = "Admin, HRAdmin")]
@@ -88,10 +126,47 @@ namespace LMS.UI.MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, HRAdmin")]
-        public ActionResult Edit([Bind(Include = "LessonId,LessonTitle,CourseId,LessonDesc,VideoURL,PdfFile,IsActive")] Lesson lesson)
+        public ActionResult Edit([Bind(Include = "LessonId,LessonTitle,CourseId,LessonDesc,VideoURL,PdfFile,IsActive")] Lesson lesson, HttpPostedFileBase pdfFile)
         {
+
+            if (lesson.VideoURL.Contains("/watch"))
+            {
+                lesson.VideoURL = lesson.VideoURL.Replace("/watch?v=", "/embed/");
+            }
+
+
             if (ModelState.IsValid)
             {
+                //establish a variable for our default image
+                string fileName = "noPdf.pdf";
+                //if a file was sent
+                if (pdfFile != null)
+                {
+                    //reassign the variable to the filename sent over
+                    fileName = pdfFile.FileName;
+
+                    //create a variable for pdf extension
+                    string ext = fileName.Substring(fileName.LastIndexOf('.'));
+
+                    //create list of extensions
+                    string[] goodExts = { ".pdf" };
+
+                    //if ext is valid, assign a GUID as the name and concatonate ext
+                    if (goodExts.Contains(ext.ToLower()))
+                    {
+                        pdfFile.SaveAs(Server.MapPath("~/Content/img/pdf/" + fileName));
+                    }//end inner if
+                    else
+                    {
+                        fileName = "noPdf.pdf";
+                    }//end else
+
+                }//end outer if
+
+                lesson.PdfFile = fileName;
+
+
+
                 db.Entry(lesson).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

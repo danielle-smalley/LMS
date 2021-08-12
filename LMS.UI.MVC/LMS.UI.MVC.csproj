@@ -212,6 +212,7 @@
     <Content Include="Content\img\feature-work-3.jpg" />
     <Content Include="Content\img\feature-work-4-large.jpg" />
     <Content Include="Content\img\feature-work-4.jpg" />
+    <Content Include="Content\img\noImage.png" />
     <Content Include="Content\img\our-work-01.jpg" />
     <Content Include="Content\img\our-work-02.jpg" />
     <Content Include="Content\img\our-work-03.jpg" />
@@ -242,6 +243,7 @@
     <Content Include="Content\img\team-04.jpg" />
     <Content Include="Content\img\team-05.jpg" />
     <Content Include="Content\img\team-06.jpg" />
+    <Content Include="Content\img\This-is-Fine-300x300.jpg" />
     <Content Include="Content\img\work-slide-01-small.jpg" />
     <Content Include="Content\img\work-slide-01.jpg" />
     <Content Include="Content\img\work-slide-02-small.jpg" />
@@ -354,6 +356,7 @@
     <Content Include="Content\fonts\boxicons.ttf" />
     <Content Include="Content\fonts\boxicons.woff" />
     <Content Include="Content\fonts\boxicons.woff2" />
+    <Content Include="Content\img\pdf\noPdf.pdf" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
