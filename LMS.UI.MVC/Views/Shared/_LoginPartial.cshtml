@@ -1,19 +1,33 @@
 ﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated) {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
+@using LMS.DATA.EF;
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav-item btn-outline-primary rounded-pill px-3" }))
+    {
         @Html.AntiForgeryToken()
 
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        @*<ul class="nav navbar-nav navbar-right">*@
+        <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-center text-dark">
+            <li class="nav-item">
+                <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Index", "Manage", routeValues: null)">Your Account</a>
+                @*@Html.ActionLink("Your Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            <li class="nav-item3">
+            <a class="nav-link btn-outline-primary rounded-pill px-3" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
     }
 }
-else {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+else
+{
+    @*<ul class="nav navbar-nav navbar-right">*@
+    <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-center text-dark">
+        <li class="nav-item btn-outline-primary rounded-pill px-3">
+        <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Register", "Account", routeValues: null)">Register</a>
+        </li>
+        
+        <li class="nav-item btn-outline-primary rounded-pill px-3">
+        <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Login", "Account", routeValues: null)">Login</a>
+        </li>
     </ul>
 }

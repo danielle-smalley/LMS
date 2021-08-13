@@ -3,48 +3,55 @@
 @{
     ViewBag.Title = "Course Details";
 }
+<div class="container">
+    <h2>@ViewBag.Title</h2>
 
-<h2>@ViewBag.Title</h2>
+    <div>
 
-<div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </dt>
 
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseName)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CourseName)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.CourseName)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CourseDescription)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseDescription)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CourseDescription)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.CourseDescription)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.IsActive)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CourseImg)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseImg)
-        </dt>
+            <dd>
+                @*@Html.DisplayFor(model => model.CourseImg)*@
+                <img src="@Url.Content("~/Content/img/" + Model.CourseImg)" alt="@Model.CourseName" />
+            </dd>
 
-        <dd>
-            @*@Html.DisplayFor(model => model.CourseImg)*@
-            <img src="@Url.Content("~/Content/img/" + Model.CourseImg)" alt="@Model.CourseName" />
-        </dd>
+        </dl>
+    </div>
 
-    </dl>
+    <p>
+        @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId })
+        }
+        </p>
+    <p>
+        @Html.ActionLink("Back to Course List", "Index")
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

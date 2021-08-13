@@ -22,7 +22,7 @@ namespace LMS.UI.MVC.Controllers
         }
 
         // GET: UserDetails/Details/5
-        [Authorize(Roles = "Admin, HRAdmin")]
+        [Authorize(Roles = "Admin, HRAdmin, Manager, Employee")]
         public ActionResult Details(string id)
         {
             if (id == null)

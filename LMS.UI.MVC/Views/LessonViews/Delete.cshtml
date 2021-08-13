@@ -1,15 +1,15 @@
 ﻿@model LMS.DATA.EF.LessonView
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete Lesson Completion Record";
 }
 
-<h2>Delete</h2>
+<div class="container">
+<h2>@ViewBag.Title</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>LessonView</h4>
-    <hr />
+
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.DateViewed)
@@ -41,8 +41,11 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            <p>
+            @Html.ActionLink("Back to Lesson Completion List", "Index")
+                </p>
         </div>
     }
+</div>
 </div>

@@ -1,34 +1,39 @@
 ﻿@model LMS.DATA.EF.UserDetail
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "User Details Deets";
 }
+<div class="container">
+    <h2>@ViewBag.Title</h2>
 
-<h2>Details</h2>
+    <div>
 
-<div>
-    <h4>UserDetail</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
 
-    </dl>
+        </dl>
+    </div>
+    @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
+    {
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.UserId })
+        </p>
+    }
+    <p>
+        @Html.ActionLink("Back to User Details List", "Index")
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

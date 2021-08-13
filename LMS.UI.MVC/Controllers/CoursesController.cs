@@ -21,7 +21,7 @@ namespace LMS.UI.MVC.Controllers
         }
 
         // GET: Courses/Details/5
-        [Authorize(Roles = "Admin, HRAdmin")]
+        [Authorize(Roles = "Admin, HRAdmin, Manager, Employee")]
         public ActionResult Details(int? id)
         {
             if (id == null)

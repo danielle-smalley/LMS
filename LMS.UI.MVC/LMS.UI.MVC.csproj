@@ -357,6 +357,7 @@
     <Content Include="Content\fonts\boxicons.woff" />
     <Content Include="Content\fonts\boxicons.woff2" />
     <Content Include="Content\img\pdf\noPdf.pdf" />
+    <Content Include="Content\img\pdf\testattach.pdf" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
