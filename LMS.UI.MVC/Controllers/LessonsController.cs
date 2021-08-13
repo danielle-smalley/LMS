@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using LMS.DATA.EF;
@@ -53,10 +55,60 @@ namespace LMS.UI.MVC.Controllers
                     db.LessonViews.Add(lv);
                     db.SaveChanges();
                 }
-            }
+
+
+                int coursesToLessonCount = db.Lessons.Where(x => x.CourseId == lesson.CourseId && x.IsActive == true).Count();
+                int coursesCompletedCount = db.LessonViews.Where(x => x.Lesson.CourseId == lesson.CourseId && x.UserId == userid && x.Lesson.IsActive == true).Count();
+
+                if (User.IsInRole("Employee") && coursesToLessonCount == coursesCompletedCount)
+                {
+                    CourseCompletion completion = new CourseCompletion();
+                    completion.UserId = userid;
+                    completion.CourseId = lesson.CourseId;
+                    completion.DateCompleted = DateTime.Now;
+
+                    var firstCompletion = db.CourseCompletions.Where(x => x.UserId == userid && x.CourseId == lesson.CourseId).FirstOrDefault();
+                    if (firstCompletion == null)
+                    {
+                        db.CourseCompletions.Add(completion);
+                        db.SaveChanges();
+
+                        string courseTaker = db.UserDetails.Where(x => x.UserId == userid).FirstOrDefault().FullName;
+                        string completedCourse = db.Courses.Where(x => x.CourseId == lesson.CourseId).FirstOrDefault().CourseName;
+                        var completionDate = completion.DateCompleted;
+
+                        string courseCompletedMessage = $"{completedCourse} course was completed at {completionDate:g} by {courseTaker}.";
+
+                        MailMessage mmsg = new MailMessage(ConfigurationManager.AppSettings["EmailUser"].ToString(), ConfigurationManager.AppSettings["EmailTo"].ToString(), "Course Completed", courseCompletedMessage);
+                        //new MailMessage("me@daniellethedev.com", "smalley.danielle@gmail.com", "Course Completed", courseCompletedMessage);
+
+                        mmsg.IsBodyHtml = true;
+                        mmsg.Priority = MailPriority.High;
+                        //SmtpClient client = new SmtpClient("mail.daniellethedev.com");
+                        //client.Credentials = new NetworkCredential("me@daniellethedev.com", "   ");
+
+                        SmtpClient client = new SmtpClient(ConfigurationManager.AppSettings["EmailClient"].ToString());
+                        //client.Port = 8889; - for gmail
+
+                        client.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["EmailUser"].ToString(), ConfigurationManager.AppSettings["EmailPass"].ToString());
+
+                        try
+                        {
+                            client.Send(mmsg);
+                        }
+                        catch (Exception ex)
+                        {
+                            ViewBag.ErrorMessage = $"Heck, the course completion notification email could not successfully send to your manager. Please try again later. Error Message: </br> {ex.StackTrace}";
+                            throw;
+                        }//end catch
+
+                    }//end firstcompletion for course completion
+                }//end if courses to complete == courses completed by employee
+
+            }//end lesson viewed
 
             return View(lesson);
-        }
+        }//end details
 
         // GET: Lessons/Create
         [Authorize(Roles = "Admin, HRAdmin")]
@@ -85,43 +137,43 @@ namespace LMS.UI.MVC.Controllers
             }
 
 
-                if (ModelState.IsValid)
+            if (ModelState.IsValid)
+            {
+                //establish a variable for our default image
+                string fileName = "noPdf.pdf";
+                //if a file was sent
+                if (pdfFile != null)
                 {
-                    //establish a variable for our default image
-                    string fileName = "noPdf.pdf";
-                    //if a file was sent
-                    if (pdfFile != null)
+                    //reassign the variable to the filename sent over
+                    fileName = pdfFile.FileName;
+
+                    //create a variable for pdf extension
+                    string ext = fileName.Substring(fileName.LastIndexOf('.'));
+
+                    //create list of extensions
+                    string[] goodExts = { ".pdf" };
+
+                    //if ext is valid, assign a GUID as the name and concatonate ext
+                    if (goodExts.Contains(ext.ToLower()))
                     {
-                        //reassign the variable to the filename sent over
-                        fileName = pdfFile.FileName;
+                        pdfFile.SaveAs(Server.MapPath("~/Content/img/pdf/" + fileName));
+                    }//end inner if
+                    else
+                    {
+                        fileName = "noPdf.pdf";
+                    }//end else
 
-                        //create a variable for pdf extension
-                        string ext = fileName.Substring(fileName.LastIndexOf('.'));
+                }//end outer if
 
-                        //create list of extensions
-                        string[] goodExts = { ".pdf" };
+                lesson.PdfFile = fileName;
 
-                        //if ext is valid, assign a GUID as the name and concatonate ext
-                        if (goodExts.Contains(ext.ToLower()))
-                        {
-                            pdfFile.SaveAs(Server.MapPath("~/Content/img/pdf/" + fileName));
-                        }//end inner if
-                        else
-                        {
-                            fileName = "noPdf.pdf";
-                        }//end else
+                db.Lessons.Add(lesson);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
 
-                    }//end outer if
-
-                    lesson.PdfFile = fileName;
-
-                    db.Lessons.Add(lesson);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-
-                ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName", lesson.CourseId);
-                return View(lesson);
+            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName", lesson.CourseId);
+            return View(lesson);
         }
 
 

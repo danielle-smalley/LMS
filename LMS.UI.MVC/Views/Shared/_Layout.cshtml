@@ -75,8 +75,15 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                         <a class="dropdown-item" href="@Url.Action("Index", "Lessons")">Lessons</a>
-                                        <a class="dropdown-item" href="@Url.Action("Index", "LessonViews")">LessonViews</a>
-                                    </div>
+                                        @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager"))
+                                        {
+                                            <a class="dropdown-item" href="@Url.Action("Index", "LessonViews")">Lesson Views</a>
+                                        }
+                                            @if (Request.IsAuthenticated && User.IsInRole("Employee"))
+                                            {
+                                                <a class="dropdown-item" href="@Url.Action("EmployeeProgress", "LessonViews")">Lesson Progress</a>
+                                            }
+                                        </div>
                                 </li>
                             }
                             @*<li class="nav-item">

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LMS.DATA.EF;
+using Microsoft.AspNet.Identity;
 
 namespace LMS.UI.MVC.Controllers
 {
@@ -20,6 +21,15 @@ namespace LMS.UI.MVC.Controllers
         {
             var lessonViews = db.LessonViews.Include(l => l.Lesson).Include(l => l.UserDetail);
             return View(lessonViews.ToList());
+        }
+
+        public ActionResult EmployeeProgress()
+        {
+            List<LessonView> employeeViews = new List<LessonView>();
+            string userid = User.Identity.GetUserId();
+            employeeViews = db.LessonViews.Where(x => x.UserId == userid).ToList();
+            var lessonViews = db.LessonViews.Include(x => x.Lesson).Include(x => x.UserDetail);
+            return View(employeeViews);
         }
 
         // GET: LessonViews/Details/5

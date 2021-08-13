@@ -55,6 +55,7 @@ namespace LMS.DATA.EF
 
         [Required(ErrorMessage = "A date/time is required")]
         [Display(Name = "Date of Completion")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:g}")]
         public System.DateTime DateCompleted { get; set; }
 
     }
@@ -116,6 +117,7 @@ namespace LMS.DATA.EF
 
         [Required(ErrorMessage = "Date Viewed is required")]
         [Display(Name = "Date Viewed")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:g}")]
         public System.DateTime DateViewed { get; set; }
 
     }
