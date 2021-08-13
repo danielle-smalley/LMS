@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LMS.DATA.EF;
+using Microsoft.AspNet.Identity;
 
 namespace LMS.UI.MVC.Controllers
 {
@@ -24,17 +25,36 @@ namespace LMS.UI.MVC.Controllers
 
         // GET: Lessons/Details/5
         [Authorize(Roles = "Admin, HRAdmin, Manager, Employee")]
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Lesson lesson = db.Lessons.Find(id);
             if (lesson == null)
             {
                 return HttpNotFound();
             }
+
+            if (lesson != null)
+            {
+                string userid = User.Identity.GetUserId();
+                LessonView lv = new LessonView();
+                lv.UserId = userid;
+                lv.LessonId = id;
+                lv.DateViewed = DateTime.Now;
+
+
+                var firstView = db.LessonViews.Where(x => x.LessonId == id && x.UserId == userid).FirstOrDefault();
+                if (User.IsInRole("Employee") && firstView == null)
+                {
+                    db.LessonViews.Add(lv);
+                    db.SaveChanges();
+                }
+            }
+
             return View(lesson);
         }
 
@@ -55,12 +75,14 @@ namespace LMS.UI.MVC.Controllers
         public ActionResult Create([Bind(Include = "LessonId,LessonTitle,CourseId,LessonDesc,VideoURL,PdfFile,IsActive")] Lesson lesson, HttpPostedFileBase pdfFile)
         {
 
-            if (lesson.VideoURL.Contains("/watch"))
+            if (lesson.VideoURL != null)
             {
-                lesson.VideoURL = lesson.VideoURL.Replace("/watch?v=", "/embed/");
+                if (lesson.VideoURL.Contains("/watch"))
+                {
+                    lesson.VideoURL = lesson.VideoURL.Replace("/watch?v=", "/embed/");
+                }
+
             }
-            db.Lessons.Add(lesson);
-            db.SaveChanges();
 
 
                 if (ModelState.IsValid)
@@ -129,10 +151,14 @@ namespace LMS.UI.MVC.Controllers
         public ActionResult Edit([Bind(Include = "LessonId,LessonTitle,CourseId,LessonDesc,VideoURL,PdfFile,IsActive")] Lesson lesson, HttpPostedFileBase pdfFile)
         {
 
-            if (lesson.VideoURL.Contains("/watch"))
+            if (lesson.VideoURL != null)
             {
-                lesson.VideoURL = lesson.VideoURL.Replace("/watch?v=", "/embed/");
+                if (lesson.VideoURL.Contains("/watch"))
+                {
+                    lesson.VideoURL = lesson.VideoURL.Replace("/watch?v=", "/embed/");
+                }
             }
+
 
 
             if (ModelState.IsValid)

@@ -1,57 +1,67 @@
-﻿@model LMS.DATA.EF.Course
+﻿@model IEnumerable<LMS.DATA.EF.Lesson>
 
 @{
-    ViewBag.Title = "Course Details";
+    ViewBag.Title = "Course Lessons";
 }
-<div class="container">
-    <h2>@ViewBag.Title</h2>
 
-    <div>
+<h2>@ViewBag.Title</h2>
 
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.CourseName)
-            </dt>
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LessonTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LessonDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VideoURL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PdfFile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cours.CourseName)
+        </th>
+        <th></th>
+    </tr>
 
-            <dd>
-                @Html.DisplayFor(model => model.CourseName)
-            </dd>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LessonTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LessonDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VideoURL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PdfFile)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cours.CourseName)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", "Lessons", new { id = item.LessonId }, null)
+            @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
+            {
+                @:|
+                @Html.ActionLink("Edit", "Edit", "Lessons", new { id = item.LessonId }, null) @:|
+                @Html.ActionLink("Delete", "Delete", new { id = item.LessonId })
+            }
+        </td>
+    </tr>
+}
 
-            <dt>
-                @Html.DisplayNameFor(model => model.CourseDescription)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.CourseDescription)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.IsActive)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.CourseImg)
-            </dt>
-
-            <dd>
-                @*@Html.DisplayFor(model => model.CourseImg)*@
-                <img src="@Url.Content("~/Content/img/" + Model.CourseImg)" alt="@Model.CourseName" />
-            </dd>
-
-        </dl>
-    </div>
-
-    <p>
-        @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
-        {
-            @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId })
-        }
-        </p>
-    <p>
-        @Html.ActionLink("Back to Course List", "Index")
-    </p>
-</div>
+</table>

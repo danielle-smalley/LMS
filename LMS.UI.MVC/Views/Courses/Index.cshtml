@@ -49,7 +49,7 @@
                 </td>
 
                 <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.CourseId })
+                    @Html.ActionLink("See Lessons", "Details", new { id = item.CourseId })
 
                     @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
                     {

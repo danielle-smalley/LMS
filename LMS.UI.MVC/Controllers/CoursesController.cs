@@ -33,7 +33,9 @@ namespace LMS.UI.MVC.Controllers
             {
                 return HttpNotFound();
             }
-            return View(course);
+
+            var lessons = db.Lessons.Where(x => x.CourseId == course.CourseId);
+            return View(lessons.ToList());
         }
 
         // GET: Courses/Create
