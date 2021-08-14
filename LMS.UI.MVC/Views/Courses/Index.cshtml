@@ -49,7 +49,8 @@
                 </td>
 
                 <td>
-                    @Html.ActionLink("See Lessons", "Details", new { id = item.CourseId })
+                    @Html.ActionLink("See Lessons", "Details", new { id = item.CourseId }) |
+                    <a href="@Url.Action("OriginalDetails", "Courses", new { id = item.CourseId })">Course Details</a>
 
                     @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
                     {

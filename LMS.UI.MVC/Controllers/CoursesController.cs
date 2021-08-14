@@ -38,6 +38,24 @@ namespace LMS.UI.MVC.Controllers
             return View(lessons.ToList());
         }
 
+        //To see course details (have file upload there so need access)
+        [Authorize(Roles = "Admin, HRAdmin, Manager, Employee")]
+        public ActionResult OriginalDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Course course = db.Courses.Find(id);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(course);
+        }
+
+
         // GET: Courses/Create
         [Authorize(Roles = "Admin, HRAdmin")]
         public ActionResult Create()
