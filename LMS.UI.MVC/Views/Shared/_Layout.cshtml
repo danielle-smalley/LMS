@@ -56,8 +56,15 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                         <a class="dropdown-item" href="@Url.Action("Index", "Courses")">Courses</a>
-                                        <a class="dropdown-item" href="@Url.Action("Index", "CourseCompletions")">Completed Courses</a>
-                                    </div>
+                                        @if (Request.IsAuthenticated && User.IsInRole("HRAdmin") || User.IsInRole("Manager") || User.IsInRole("Admin"))
+                                        {
+                                            <a class="dropdown-item" href="@Url.Action("Index", "CourseCompletions")">Completed Courses</a>
+                                        }
+                                            @if (Request.IsAuthenticated && User.IsInRole("Employee"))
+                                            {
+                                                <a class="dropdown-item" href="@Url.Action("EmployeeProgress", "CourseCompletions")">Course Completion Progress</a>
+                                            }
+                                        </div>
                                 </li>
                             }
                             @*<li class="nav-item">
@@ -89,7 +96,7 @@
                             @*<li class="nav-item">
                                     <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Index", "LessonViews")">Completed Lessons</a>
                                 </li>*@
-                            @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager") || User.IsInRole("Employee"))
+                            @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Index", "UserDetails")">User Details</a>

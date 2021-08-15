@@ -15,11 +15,11 @@
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.FirstName)
+                    @Html.DisplayNameFor(model => model.FullName)
                 </th>
-                <th>
+                @*<th>
                     @Html.DisplayNameFor(model => model.LastName)
-                </th>
+                </th>*@
                 <th></th>
             </tr>
 
@@ -27,11 +27,11 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)
+                        @Html.DisplayFor(modelItem => item.FullName)
                     </td>
-                    <td>
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.LastName)
-                    </td>
+                    </td>*@
                     <td>
                         @Html.ActionLink("Details", "Details", new { id = item.UserId })
                         @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))

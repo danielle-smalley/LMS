@@ -146,6 +146,7 @@ namespace LMS.DATA.EF
     [MetadataType(typeof(UserDetailMetadata))]
     public partial class UserDetail
     {
+        [Display(Name = "Full Name")]
         public string FullName
         {
             get { return FirstName + " " + LastName; }

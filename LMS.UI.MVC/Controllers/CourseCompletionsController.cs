@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LMS.DATA.EF;
+using Microsoft.AspNet.Identity;
 
 namespace LMS.UI.MVC.Controllers
 {
@@ -20,6 +21,16 @@ namespace LMS.UI.MVC.Controllers
         {
             var courseCompletions = db.CourseCompletions.Include(c => c.Cours).Include(c => c.UserDetail);
             return View(courseCompletions.ToList());
+        }
+
+        //Added this logic and corresponding view so employees can see Course Completion Progress
+        public ActionResult EmployeeProgress()
+        {
+            List<CourseCompletion> empCompletions = new List<CourseCompletion>();
+            string userid = User.Identity.GetUserId();
+            empCompletions = db.CourseCompletions.Where(x => x.UserId == userid).ToList();
+            var courseCompletions = db.CourseCompletions.Include(c => c.Cours).Include(c => c.UserDetail.FullName);
+            return View(empCompletions);
         }
 
         // GET: CourseCompletions/Details/5

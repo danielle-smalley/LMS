@@ -23,12 +23,13 @@ namespace LMS.UI.MVC.Controllers
             return View(lessonViews.ToList());
         }
 
+        //Added this logic and corresponding view so employees can see Lesson View Progress
         public ActionResult EmployeeProgress()
         {
             List<LessonView> employeeViews = new List<LessonView>();
             string userid = User.Identity.GetUserId();
             employeeViews = db.LessonViews.Where(x => x.UserId == userid).ToList();
-            var lessonViews = db.LessonViews.Include(x => x.Lesson).Include(x => x.UserDetail);
+            var lessonViews = db.LessonViews.Include(x => x.Lesson).Include(x => x.UserDetail.FullName);
             return View(employeeViews);
         }
 

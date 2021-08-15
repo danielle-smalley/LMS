@@ -1,17 +1,15 @@
 ﻿@model IEnumerable<LMS.DATA.EF.CourseCompletion>
 
 @{
-    ViewBag.Title = "Course Completions";
+    ViewBag.Title = "Your Course Completion Progress";
 }
+
 <div class="container">
     <h2>@ViewBag.Title</h2>
 
-    @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
-    {
-        <p>
+    @*<p>
             @Html.ActionLink("Create New", "Create")
-        </p>
-    }
+        </p>*@
     <table class="table">
         <tr>
             <th>
@@ -38,20 +36,13 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.UserDetail.FullName)
                 </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.CourseCompletionId })
-
-                    @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
-                    {
-                        @:|
-                        @Html.ActionLink("Edit", "Edit", new { id = item.CourseCompletionId }) @:|
-
-                        @Html.ActionLink("Delete", "Delete", new { id = item.CourseCompletionId })
-                    }
-                </td>
+                @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CourseCompletionId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.CourseCompletionId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CourseCompletionId })
+                </td>*@
             </tr>
         }
-
 
     </table>
 </div>
