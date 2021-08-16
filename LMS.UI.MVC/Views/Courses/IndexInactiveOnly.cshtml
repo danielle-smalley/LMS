@@ -6,14 +6,16 @@
 
 @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
 {
-    <div class="container">
+    <br/>
+    <div class="container text-center">
         <h2>@ViewBag.Title</h2>
-
-        <p>
+        <br/>
+        <p class="text-center">
             @*@Html.ActionLink("Create New", "Create")*@
-            <a href="@Url.Action("Index", "Courses")" class="btn btn-warning">Go Back to Active Courses</a>
+            <a href="@Url.Action("Index", "Courses")" class="btn btn-light">Go Back to Active Courses</a>
         </p>
-        <table class="table" id="data-table">
+        <br/>
+        <table class="table table-dark" id="data-table">
             <thead>
                 <tr>
                     <th>
@@ -54,9 +56,9 @@
                                 @Html.DisplayFor(modelItem => item.CourseImg)
                             </td>*@
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.CourseId }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.CourseId })
+                            @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }, new { @class = "btn btn-warning" }) 
+                            @Html.ActionLink("Details", "Details", new { id = item.CourseId }, new { @class = "btn btn-success" }) 
+                            @Html.ActionLink("Delete", "Delete", new { id = item.CourseId }, new { @class = "btn btn-danger"})
                         </td>
                     </tr>
                 }

@@ -3,21 +3,23 @@
 @{
     ViewBag.Title = "Course Catalog";
 }
+<br/>
 <div class="container">
-    <h2>@ViewBag.Title</h2>
-
+    <h2 class="text-center">@ViewBag.Title</h2>
+    <br/>
     @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
     {
-        <p>
-            @Html.ActionLink("Create New", "Create")
+        <p class="text-center">
+            <a href="@Url.Action("Create", "Courses")" class="btn btn-warning">Create New Course</a>
         </p>
 
-        <p>
+        <p class="text-center">
             @*@Html.ActionLink("Create New", "Create")*@
-            <a href="@Url.Action("IndexInactiveOnly", "Courses")" class="btn btn-warning">View Inactive Courses</a>
+            <a href="@Url.Action("IndexInactiveOnly", "Courses")" class="btn btn-light text-center">View Inactive Courses</a>
         </p>
+        <br/>
     }
-    <table class="table" id="data-table">
+    <table class="table table-dark" id="data-table">
         <thead>
             <tr>
                 <th>
@@ -30,7 +32,8 @@
                     @Html.DisplayNameFor(model => model.CourseDescription)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.IsActive)
+                    Completed?
+                    @*@Html.DisplayNameFor(model => model.IsActive)*@
                 </th>
 
                 <th></th>
@@ -42,7 +45,7 @@
                 <tr>
                     <td>
                         @*@Html.DisplayFor(modelItem => item.CourseImg)*@
-                        <img src="@Url.Content("~/Content/img/" + item.CourseImg)" alt="@item.CourseName" />
+                        <img src="@Url.Content("~/Content/img/" + item.CourseImg)" alt="@item.CourseName" loading="lazy" class="lazyload" />
 
                     </td>
                     <td>
@@ -52,18 +55,26 @@
                         @Html.DisplayFor(modelItem => item.CourseDescription)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.IsActive)
+                        @if (item.hasCompleted == true)
+	                        {
+		                           <span>Completed</span>
+                        }
+                        else
+                        {
+                                <span>Incomplete</span>
+                        }
                     </td>
 
                     <td>
-                        @Html.ActionLink("See Lessons", "Details", new { id = item.CourseId })
+                        @Html.ActionLink("See Lessons", "Details", new { id = item.CourseId }, new { @class = "btn btn-success" })
                         @*<a href="@Url.Action("OriginalDetails", "Courses", new { id = item.CourseId })">Course Details</a>*@
 
                         @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
                         {
-                            @:|
-                            @Html.ActionLink("Edit Course", "Edit", new { id = item.CourseId }) @:|
-                            @Html.ActionLink("Delete", "Delete", new { id = item.CourseId })
+
+                            @Html.ActionLink("Edit Course", "Edit", new { id = item.CourseId }, new { @class = "btn btn-warning" }) 
+                            <br/>
+                            @Html.ActionLink("Delete", "Delete", new { id = item.CourseId }, new { @class = "btn btn-danger" })
                         }
                     </td>
                 </tr>

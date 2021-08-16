@@ -5,18 +5,14 @@
 }
 
 <div class="container text-center">
+    <br/>
+    <br/>
     <h2>@ViewBag.Title</h2>
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <div id="map" style="height: 480px;">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d198593.17128267355!2d-92.47092317814327!3d38.946410280361306!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87dcabf3bb8182c9%3A0xa011692dbabd6f20!2sColumbia%2C%20MO!5e0!3m2!1sen!2sus!4v1625758241912!5m2!1sen!2sus" width="600" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-
-            </div>
-        </div>
-    </div>
-    <br />
-    <br />
+    <br/>
 </div>
+
+
+
 
 <div class="container">
     @using (Html.BeginForm())
@@ -33,7 +29,7 @@
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
             </div>
-
+            <br />
             <div class="form-group">
                 @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -41,7 +37,7 @@
                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                 </div>
             </div>
-
+            <br />
             <div class="form-group">
                 @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -49,7 +45,7 @@
                     @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
                 </div>
             </div>
-
+            <br />
             <div class="form-group">
                 @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -68,12 +64,13 @@
         <br />
         <br />
     }
+    </div>
 
     @*<div>
             @Html.ActionLink("Back to List", "Index")
         </div>*@
-</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

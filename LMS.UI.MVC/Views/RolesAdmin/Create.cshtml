@@ -4,8 +4,9 @@
     ViewBag.Title = "Create New Role";
 }
 <div class="container">
-<h2>@ViewBag.Title</h2>
-
+    <br/>
+<h2 class="text-center">@ViewBag.Title</h2>
+    <br/>
 
 @using (Html.BeginForm())
 {
@@ -22,18 +23,20 @@
                 @Html.ValidationMessageFor(model => model.Name)
             </div>
         </div>
-
+        <br/>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </div>
     </div>
+    <br/>
 }
 
 <div>
-    @Html.ActionLink("Back to RolesList", "Index")
+    @Html.ActionLink("Back to Roles List", "Index")
 </div>
+    <br/>
 </div>
 
 @section Scripts {

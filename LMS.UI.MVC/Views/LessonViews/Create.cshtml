@@ -5,8 +5,9 @@
 }
 
 <div class="container">
-<h2>@ViewBag.Title</h2>
-
+    <br/>
+<h2 class="text-center">@ViewBag.Title</h2>
+    <br/>
 
 @using (Html.BeginForm()) 
 {
@@ -22,7 +23,7 @@
                 @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <br/>
         <div class="form-group">
             @Html.LabelFor(model => model.LessonId, "LessonId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -30,7 +31,7 @@
                 @Html.ValidationMessageFor(model => model.LessonId, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <br/>
         <div class="form-group">
             @Html.LabelFor(model => model.DateViewed, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -38,18 +39,24 @@
                 @Html.ValidationMessageFor(model => model.DateViewed, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <br/>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </div>
     </div>
+    <br/>
 }
 
-<div>
-    @Html.ActionLink("Back to Lesson Completion List", "Index")
-</div>
+    <div>
+        <p class="text-center">
+            <a href="@Url.Action("Index", "LessonViews")" class="btn btn-warning">Back to Lesson Completion List</a>
+        </p>
+
+        @*@Html.ActionLink("Back to Lesson Completion List", "Index")*@
+    </div>
+    <br/>
 </div>
 
 @section Scripts {

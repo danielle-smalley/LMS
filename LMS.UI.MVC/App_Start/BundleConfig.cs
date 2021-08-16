@@ -30,6 +30,7 @@ namespace LMS.UI.MVC
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/css/bootstrap.min.css",
+                      "~/Content/css/bootstrap2.min.css",
                       "~/Content/DataTables/css/jquery.dataTables.min.css",
                       "~/Content/css/boxicon.min.css",
                       "~/Content/css/templatemo.css",

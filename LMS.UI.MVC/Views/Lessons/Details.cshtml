@@ -4,8 +4,9 @@
     ViewBag.Title = "Lesson Details";
 }
 <div class="container">
-    <h2>@ViewBag.Title</h2>
-
+    <br />
+    <h2 class="text-center">@ViewBag.Title</h2>
+    <br />
     <div>
 
         <dl class="dl-horizontal">
@@ -51,7 +52,7 @@
 
             <dd>
                 @*@Html.DisplayFor(model => model.PdfFile)*@
-                <a href="@Url.Content("~/Content/img/pdf/" + @Model.PdfFile)" target="_blank">Click For Lesson PDF</a>
+                <a class="btn btn-info" href="@Url.Content("~/Content/img/pdf/" + @Model.PdfFile)" target="_blank">Click For Lesson PDF</a>
             </dd>
 
             <dt>
@@ -74,12 +75,17 @@
     </div>
     @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
     {
+
+
         <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.LessonId })
-           
-            </p>
-    }
-    <p>
-            @Html.ActionLink("Back to Courses List", "Details", "Courses", new { id = Model.CourseId}, null)
+            @Html.ActionLink("Edit", "Edit", new { id = Model.LessonId }, new { @class = "btn btn-warning" })
+
         </p>
-    </div>
+    }
+    <p class="text-center">
+        <a href="@Url.Action("Index", "Lessons")" class="btn btn-lg btn-primary">Back to Lessons</a>
+    </p>
+    @*<p class="text-center"
+       @Html.ActionLink("Back to Courses List", "Details", "Courses", new { id = Model.CourseId }, new { @class = "btn btn-light" })
+    </p>*@
+</div>

@@ -4,15 +4,21 @@
     ViewBag.Title = "Lesson Completions";
 }
 <div class="container">
-    <h2>@ViewBag.Title</h2>
-
+    <br />
+    <h2 class="text-center">@ViewBag.Title</h2>
+    <br />
     @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
     {
+
         <p>
-            @Html.ActionLink("Create New", "Create")
+            <a href="@Url.Action("Create", "LessonViews")" class="btn btn-warning">Create New Lesson View Record</a>
         </p>
+        <br/>
+        @*<p>
+            @Html.ActionLink("Create New", "Create")
+        </p>*@
     }
-    <table class="table" id="data-table">
+    <table class="table table-primary" id="data-table">
         <thead>
             <tr>
                 <th>
@@ -41,12 +47,12 @@
                         @Html.DisplayFor(modelItem => item.UserDetail.FullName)
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "Details", new { id = item.LessonViewedId })
+                        @Html.ActionLink("Details", "Details", new { id = item.LessonViewedId }, new { @class = "btn btn-success" })
                         @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
                         {
-                            @:|
-                            @Html.ActionLink("Edit", "Edit", new { id = item.LessonViewedId }) @:|
-                            @Html.ActionLink("Delete", "Delete", new { id = item.LessonViewedId })
+                            
+                            @Html.ActionLink("Edit", "Edit", new { id = item.LessonViewedId }, new { @class = "btn btn-warning" })
+                            @Html.ActionLink("Delete", "Delete", new { id = item.LessonViewedId }, new { @class = "btn btn-danger"})
                         }
                     </td>
                 </tr>
