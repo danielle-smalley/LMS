@@ -15,9 +15,18 @@ namespace LMS.UI.MVC.Controllers
         private LMSEntities db = new LMSEntities();
 
         // GET: Courses
+        [Authorize(Roles = "Admin, HRAdmin, Manager, Employee")]
         public ActionResult Index()
         {
-            return View(db.Courses.ToList());
+            var activeCourses = db.Courses.Where(x => x.IsActive == true).ToList();
+            return View(activeCourses.ToList());
+        }
+
+        [Authorize(Roles = "Admin, HRAdmin")]
+        public ActionResult IndexInactiveOnly()
+        {
+            var inactiveCourses = db.Courses.Where(x => x.IsActive == false).ToList();
+            return View(inactiveCourses);
         }
 
         // GET: Courses/Details/5

@@ -11,6 +11,10 @@
         <p>
             @Html.ActionLink("Create New", "Create")
         </p>
+        <p>
+            @*@Html.ActionLink("Create New", "Create")*@
+            <a href="@Url.Action("IndexInactiveOnly", "Lessons")" class="btn btn-warning">View Inactive Lessons</a>
+        </p>
     }
     <table class="table" id="data-table">
         <thead>

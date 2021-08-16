@@ -21,8 +21,15 @@ namespace LMS.UI.MVC.Controllers
         [Authorize(Roles = "Admin, HRAdmin, Manager, Employee")]
         public ActionResult Index()
         {
-            var lessons = db.Lessons.Include(l => l.Cours);
-            return View(lessons.ToList());
+            var activeLessons = db.Lessons.Where(l => l.IsActive == true);
+            return View(activeLessons.ToList());
+        }
+
+        [Authorize(Roles = "Admin, HRAdmin")]
+        public ActionResult IndexInactiveOnly()
+        {
+            var inactiveLessons = db.Lessons.Where(l => l.IsActive == false);
+            return View(inactiveLessons.ToList());
         }
 
         // GET: Lessons/Details/5
