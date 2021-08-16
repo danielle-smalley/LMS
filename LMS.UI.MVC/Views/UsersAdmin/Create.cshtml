@@ -3,8 +3,9 @@
     ViewBag.Title = "Create New User";
 }
 <div class="container">
-<h2>@ViewBag.Title</h2>
-
+    <br/>
+<h2 class="text-center">@ViewBag.Title</h2>
+    <br/>
 @using (Html.BeginForm("Create", "UsersAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
@@ -54,11 +55,13 @@
             }
         </div>
     </div>
+    <br/>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-primary" value="Create" />
         </div>
     </div>
+    <br/>
 }
 </div>
 @section Scripts {

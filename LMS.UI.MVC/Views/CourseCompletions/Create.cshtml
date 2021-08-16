@@ -5,7 +5,8 @@
 }
 
 <div class="container">
-    <h2>@ViewBag.Title</h2>
+    <br/>
+    <h2 class="text-center">@ViewBag.Title</h2>
 
 
     @using (Html.BeginForm())
@@ -38,18 +39,24 @@
                     @Html.ValidationMessageFor(model => model.DateCompleted, "", new { @class = "text-danger" })
                 </div>
             </div>
-
+            <br/>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="submit" value="Create" class="btn btn-success" />
                 </div>
             </div>
         </div>
+        <br/>
     }
 
-    <div>
-        @Html.ActionLink("Back to Course Completion List", "Index")
-    </div>
+        <div>
+            <p class="text-center">
+                @*@Html.ActionLink("Create New", "Create")*@
+                <a href="@Url.Action("Index", "CourseCompletions")" class="btn btn-light text-center">Back to Course Completion List</a>
+            </p>
+            <br/>
+            @*@Html.ActionLink("Back to Course Completion List", "Index")*@
+        </div>
 </div>
 
 

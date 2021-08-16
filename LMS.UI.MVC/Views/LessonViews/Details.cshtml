@@ -5,8 +5,9 @@
 }
 
 <div class="container">
-    <h2>@ViewBag.Title</h2>
-
+    <br />
+    <h2 class="text-center">@ViewBag.Title</h2>
+    <br />
     <div>
 
         <dl class="dl-horizontal">
@@ -36,13 +37,13 @@
 
         </dl>
     </div>
-    @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
-    {
-        <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.LessonViewedId })
-            </p>
-    }
-    <p>
-            @Html.ActionLink("Back to Lesson Completion List", "Index")
-        </p>
-    </div>
+
+
+    <p class="text-center">
+        <a href="@Url.Action("Index", "LessonViews")" class="btn btn-warning">Back to Lesson Completions List</a>
+    </p>
+    <br/>
+    @*<p>
+        @Html.ActionLink("Back to Lesson Completion List", "Index")
+    </p>*@
+</div>

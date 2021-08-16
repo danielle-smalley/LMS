@@ -4,15 +4,19 @@
     ViewBag.Title = "Course Completions";
 }
 <div class="container">
-    <h2>@ViewBag.Title</h2>
-
+    <br />
+    <h2 class="text-center">@ViewBag.Title</h2>
+    <br />
     @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
     {
+
         <p>
-            @Html.ActionLink("Create New", "Create")
+            @*@Html.ActionLink("Create New", "Create")*@
+            <a href="@Url.Action("Create", "CourseCompletions")" class="btn btn-light text-center">Create New Course Completion Record</a>
         </p>
+<br/>
     }
-    <table class="table" id="data-table">
+    <table class="table table-primary" id="data-table">
         <thead>
             <tr>
                 <th>
@@ -41,19 +45,19 @@
                         @Html.DisplayFor(modelItem => item.UserDetail.FullName)
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "Details", new { id = item.CourseCompletionId })
+                        @Html.ActionLink("Details", "Details", new { id = item.CourseCompletionId }, new { @class = "btn btn-success"})
 
                         @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
                         {
-                            @:|
-                            @Html.ActionLink("Edit", "Edit", new { id = item.CourseCompletionId }) @:|
+                            
+                            @Html.ActionLink("Edit", "Edit", new { id = item.CourseCompletionId }, new { @class = "btn btn-warning"}) 
 
-                            @Html.ActionLink("Delete", "Delete", new { id = item.CourseCompletionId })
+                            @Html.ActionLink("Delete", "Delete", new { id = item.CourseCompletionId }, new { @class = "btn btn-danger"})
                         }
                     </td>
                 </tr>
             }
-            </tbody>
+        </tbody>
 
     </table>
 </div>

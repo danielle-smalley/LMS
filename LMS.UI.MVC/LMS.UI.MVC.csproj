@@ -192,6 +192,7 @@
     <None Include="configs\ASK.config" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\bootstrap2.min.css" />
     <Content Include="Content\css\boxicon.min.css" />
     <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\templatemo.css" />

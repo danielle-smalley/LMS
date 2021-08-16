@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LMS.DATA.EF;
+using Microsoft.AspNet.Identity;
 
 namespace LMS.UI.MVC.Controllers
 {
@@ -18,7 +19,24 @@ namespace LMS.UI.MVC.Controllers
         [Authorize(Roles = "Admin, HRAdmin, Manager, Employee")]
         public ActionResult Index()
         {
+            //want to compare courses vs completed courses for employees
+            string userid = User.Identity.GetUserId();
+            var completedCourses = db.CourseCompletions.Where(x => x.UserId == userid).ToList();
+
             var activeCourses = db.Courses.Where(x => x.IsActive == true).ToList();
+            foreach (var item in completedCourses)
+            {
+                foreach (var aCourse in activeCourses)
+                {
+                    if (aCourse.CourseId == item.CourseId)
+                    {
+                        aCourse.hasCompleted = true;
+                    }
+                    //if we found a match here, this is completed
+                    //otherwise, = false 
+                }
+            }
+
             return View(activeCourses.ToList());
         }
 

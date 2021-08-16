@@ -21,7 +21,23 @@ namespace LMS.UI.MVC.Controllers
         [Authorize(Roles = "Admin, HRAdmin, Manager, Employee")]
         public ActionResult Index()
         {
+            string userid = User.Identity.GetUserId();
+            var completedLessons = db.LessonViews.Where(x => x.UserId == userid).ToList();
+
             var activeLessons = db.Lessons.Where(l => l.IsActive == true);
+            foreach (var item in completedLessons)
+            {
+                foreach (var cLesson in activeLessons)
+                {
+                    if (cLesson.LessonId == item.LessonId)
+                    {
+                        cLesson.hasCompleted = true;
+                    }
+                    //if we found a match here, this is completed
+                    //otherwise, = false
+                }
+            }
+
             return View(activeLessons.ToList());
         }
 
@@ -54,6 +70,7 @@ namespace LMS.UI.MVC.Controllers
                 lv.UserId = userid;
                 lv.LessonId = id;
                 lv.DateViewed = DateTime.Now;
+
 
 
                 var firstView = db.LessonViews.Where(x => x.LessonId == id && x.UserId == userid).FirstOrDefault();

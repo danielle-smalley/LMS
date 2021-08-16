@@ -35,7 +35,11 @@ namespace LMS.DATA.EF
     [MetadataType(typeof(CourseMetadata))]
     public partial class Course
     {
-
+       public bool hasCompleted
+        {
+            get;
+            set;
+        }
     }
 
     public class CourseCompletionMetadata
@@ -55,7 +59,7 @@ namespace LMS.DATA.EF
 
         [Required(ErrorMessage = "A date/time is required")]
         [Display(Name = "Date of Completion")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:g}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public System.DateTime DateCompleted { get; set; }
 
     }
@@ -98,7 +102,11 @@ namespace LMS.DATA.EF
     [MetadataType(typeof(LessonMetadata))]
     public partial class Lesson
     {
-
+        public bool hasCompleted
+        {
+            get;
+            set;
+        }
     }
 
     public class LessonViewMetadata
@@ -117,7 +125,7 @@ namespace LMS.DATA.EF
 
         [Required(ErrorMessage = "Date Viewed is required")]
         [Display(Name = "Date Viewed")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:g}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public System.DateTime DateViewed { get; set; }
 
     }
@@ -152,5 +160,6 @@ namespace LMS.DATA.EF
             get { return FirstName + " " + LastName; }
         }
     }
+
 
 }//end namespace

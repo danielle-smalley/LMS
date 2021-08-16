@@ -4,7 +4,9 @@
 }
 
 <div class="container">
-    <h2>@ViewBag.Title</h2>
+    <br/>
+    <h2 class="text-center">@ViewBag.Title</h2>
+    <br/>
 
     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
@@ -15,28 +17,31 @@
         <div class="form-group">
             @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "Please enter your first name" })
             </div>
         </div>
+        <br/>
         <div class="form-group">
             @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Please enter your last name" })
             </div>
         </div>
-
+        <br/>
         <div class="form-group">
             @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Please enter your email address" })
             </div>
         </div>
+        <br/>
         <div class="form-group">
             @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
             </div>
         </div>
+        <br/>
         <div class="form-group">
             @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">

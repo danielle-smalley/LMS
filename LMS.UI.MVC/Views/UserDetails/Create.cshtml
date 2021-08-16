@@ -4,8 +4,9 @@
     ViewBag.Title = "Create New User Details Record";
 }
 <div class="container">
-<h2>@ViewBag.Title</h2>
-
+    <br/>
+<h2 class="text-center">@ViewBag.Title</h2>
+    <br/>
 
 @using (Html.BeginForm()) 
 {
@@ -21,7 +22,7 @@
                 @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <br/>
         <div class="form-group">
             @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -29,7 +30,7 @@
                 @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <br/>
         <div class="form-group">
             @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -37,7 +38,7 @@
                 @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <br/>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -46,9 +47,13 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to User Details List", "Index")
-</div>
+    <div>
+        <p class="text-center">
+            <a href="@Url.Action("Index", "UserDetails")" class="btn btn-warning">Back to User Details List</a>
+        </p>
+
+    </div>
+    <br/>
 </div>
 
 @section Scripts {
