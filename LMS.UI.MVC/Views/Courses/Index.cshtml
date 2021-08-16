@@ -12,55 +12,65 @@
             @Html.ActionLink("Create New", "Create")
         </p>
     }
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CourseImg)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CourseName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CourseDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+    <table class="table" id="data-table">
+        <thead>
             <tr>
-                <td>
-                    @*@Html.DisplayFor(modelItem => item.CourseImg)*@
-                    <img src="@Url.Content("~/Content/img/" + item.CourseImg)" alt="@item.CourseName" />
+                <th>
+                    @Html.DisplayNameFor(model => model.CourseImg)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CourseName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CourseDescription)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsActive)
+                </th>
 
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CourseName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CourseDescription)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsActive)
-                </td>
-
-                <td>
-                    @Html.ActionLink("See Lessons", "Details", new { id = item.CourseId }) 
-                    @*<a href="@Url.Action("OriginalDetails", "Courses", new { id = item.CourseId })">Course Details</a>*@
-
-                    @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
-                    {
-                        @:|
-                        @Html.ActionLink("Edit Course", "Edit", new { id = item.CourseId }) @:|
-                        @Html.ActionLink("Delete", "Delete", new { id = item.CourseId })
-                    }
-                </td>
+                <th></th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.CourseImg)*@
+                        <img src="@Url.Content("~/Content/img/" + item.CourseImg)" alt="@item.CourseName" />
 
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("See Lessons", "Details", new { id = item.CourseId })
+                        @*<a href="@Url.Action("OriginalDetails", "Courses", new { id = item.CourseId })">Course Details</a>*@
+
+                        @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
+                        {
+                            @:|
+                            @Html.ActionLink("Edit Course", "Edit", new { id = item.CourseId }) @:|
+                            @Html.ActionLink("Delete", "Delete", new { id = item.CourseId })
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 </div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#data-table').DataTable();
+        });
+    </script>
+}

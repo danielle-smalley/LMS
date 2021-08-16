@@ -25,10 +25,12 @@ namespace LMS.UI.MVC
                       //"~/Scripts/jquery.min.js",
                       "~/Scripts/isotope.pkgd.js",
                       "~/Scripts/templatemo.js",
+                      "~/Scripts/DataTables/jquery.dataTables.min.js",
                       "~/Scripts/custom.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/css/bootstrap.min.css",
+                      "~/Content/DataTables/css/jquery.dataTables.min.css",
                       "~/Content/css/boxicon.min.css",
                       "~/Content/css/templatemo.css",
                       "~/Content/css/custom.css"));
