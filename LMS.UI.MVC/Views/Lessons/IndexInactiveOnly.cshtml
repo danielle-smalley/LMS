@@ -6,11 +6,11 @@
 
 @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
 {
-    <br/>
+    <br />
 
     <div class="container">
         <h2 class="text-center">@ViewBag.Title</h2>
-        <br/>
+        <br />
 
         <p class="text-center">
             <a href="@Url.Action("Index", "Lessons")" class="btn btn-light">Go Back to Active Lessons</a>
@@ -18,8 +18,8 @@
             @*@Html.ActionLink("Create New", "Create")*@
         </p>
 
-        <br/>
-        <table class="table table-primary" id="data-table">
+        <br />
+        <table class="table table-primary display" id="data-table">
             <thead>
                 <tr>
                     <th>
@@ -66,7 +66,7 @@
                             @Html.DisplayFor(modelItem => item.Cours.CourseName)
                         </td>
                         <td>
-                            @Html.ActionLink("Details", "Details", new { id = item.LessonId }, new { @class = "btn btn-info" })
+                            @Html.ActionLink("Details", "Details", new { id = item.LessonId }, new { @class = "btn btn-success" })
                             @Html.ActionLink("Edit", "Edit", new { id = item.LessonId }, new { @class = "btn btn-warning" })
 
                             @Html.ActionLink("Delete", "Delete", new { id = item.LessonId }, new { @class = "btn btn-danger" })
@@ -81,7 +81,8 @@
 @section scripts{
     <script>
         $(document).ready(function () {
-            $('#data-table').DataTable();
+            $('#data-table.display').DataTable({ responsive: true});
+
         });
     </script>
 }

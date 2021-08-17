@@ -14,7 +14,7 @@
     @*<p>
             @Html.ActionLink("Create New", "Create")
         </p>*@
-    <table class="table table-primary" id="data-table">
+    <table class="table table-primary display" id="data-table">
         <thead>
             <tr>
                 <th>
@@ -30,8 +30,8 @@
                     @Html.DisplayNameFor(model => model.PdfFile)
                 </th>
                 @*<th>
-                    @Html.DisplayNameFor(model => model.IsActive)
-                </th>*@
+                        @Html.DisplayNameFor(model => model.IsActive)
+                    </th>*@
                 <th>
                     @Html.DisplayNameFor(model => model.Cours.CourseName)
                 </th>
@@ -55,16 +55,16 @@
                         @Html.DisplayFor(modelItem => item.PdfFile)
                     </td>
                     @*<td>
-                        @Html.DisplayFor(modelItem => item.IsActive)
-                    </td>*@
+                            @Html.DisplayFor(modelItem => item.IsActive)
+                        </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.Cours.CourseName)
                     </td>
                     <td>
-                        @Html.ActionLink("Open Lesson", "Details", "Lessons", new { id = item.LessonId }, new { @class = "btn btn-info"})
+                        @Html.ActionLink("Open Lesson", "Details", "Lessons", new { id = item.LessonId }, new { @class = "btn btn-info" })
                         @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
                         {
-                     
+
                             @Html.ActionLink("Edit", "Edit", "Lessons", new { id = item.LessonId }, new { @class = "btn btn-warning" })
                             @*@Html.ActionLink("Delete", "Delete", new { id = item.LessonId })*@
                         }
@@ -77,7 +77,7 @@
 @section scripts{
     <script>
         $(document).ready(function () {
-            $('#data-table').DataTable();
+            $('#data-table.display').DataTable({ responsive: true });
         });
     </script>
 }

@@ -6,16 +6,16 @@
 
 @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
 {
-    <br/>
+    <br />
     <div class="container text-center">
         <h2>@ViewBag.Title</h2>
-        <br/>
+        <br />
         <p class="text-center">
             @*@Html.ActionLink("Create New", "Create")*@
             <a href="@Url.Action("Index", "Courses")" class="btn btn-light">Go Back to Active Courses</a>
         </p>
-        <br/>
-        <table class="table table-dark" id="data-table">
+        <br />
+        <table class="table table-dark display" id="data-table">
             <thead>
                 <tr>
                     <th>
@@ -56,9 +56,9 @@
                                 @Html.DisplayFor(modelItem => item.CourseImg)
                             </td>*@
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }, new { @class = "btn btn-warning" }) 
-                            @Html.ActionLink("Details", "Details", new { id = item.CourseId }, new { @class = "btn btn-success" }) 
-                            @Html.ActionLink("Delete", "Delete", new { id = item.CourseId }, new { @class = "btn btn-danger"})
+                            @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }, new { @class = "btn btn-warning" })
+                            @Html.ActionLink("Details", "Details", new { id = item.CourseId }, new { @class = "btn btn-success" })
+                            @Html.ActionLink("Delete", "Delete", new { id = item.CourseId }, new { @class = "btn btn-danger" })
                         </td>
                     </tr>
                 }
@@ -70,7 +70,7 @@
 @section scripts{
     <script>
         $(document).ready(function () {
-            $('#data-table').DataTable();
+            $('#data-table.display').DataTable({ responsive: true });
         });
     </script>
 }

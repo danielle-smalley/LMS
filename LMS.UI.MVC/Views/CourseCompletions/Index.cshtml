@@ -14,9 +14,9 @@
             @*@Html.ActionLink("Create New", "Create")*@
             <a href="@Url.Action("Create", "CourseCompletions")" class="btn btn-light text-center">Create New Course Completion Record</a>
         </p>
-<br/>
+        <br />
     }
-    <table class="table table-primary" id="data-table">
+    <table class="table table-primary display" id="data-table">
         <thead>
             <tr>
                 <th>
@@ -45,14 +45,14 @@
                         @Html.DisplayFor(modelItem => item.UserDetail.FullName)
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "Details", new { id = item.CourseCompletionId }, new { @class = "btn btn-success"})
+                        @Html.ActionLink("Details", "Details", new { id = item.CourseCompletionId }, new { @class = "btn btn-success" })
 
                         @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
                         {
-                            
-                            @Html.ActionLink("Edit", "Edit", new { id = item.CourseCompletionId }, new { @class = "btn btn-warning"}) 
 
-                            @Html.ActionLink("Delete", "Delete", new { id = item.CourseCompletionId }, new { @class = "btn btn-danger"})
+                            @Html.ActionLink("Edit", "Edit", new { id = item.CourseCompletionId }, new { @class = "btn btn-warning" })
+
+                            @Html.ActionLink("Delete", "Delete", new { id = item.CourseCompletionId }, new { @class = "btn btn-danger" })
                         }
                     </td>
                 </tr>
@@ -64,7 +64,7 @@
 @section scripts{
     <script>
         $(document).ready(function () {
-            $('#data-table').DataTable();
+            $('#data-table.display').DataTable({ responsive: true });
         });
     </script>
 }

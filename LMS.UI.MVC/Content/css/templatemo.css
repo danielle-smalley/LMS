@@ -190,3 +190,8 @@ footer a.text-light:hover {
   color: #bfbfbf !important;
   transition-duration: 0.15s;
 }
+
+/*Adding for navbar active indicator*/
+/*.active {
+    background-color: #9900FF;
+}*/

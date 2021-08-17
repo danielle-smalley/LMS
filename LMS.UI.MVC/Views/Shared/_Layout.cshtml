@@ -5,13 +5,16 @@
 
     <title>Coding Bootcamp Survival Kit</title>
     <meta charset="utf-8">
-    <meta name="keywords" content="learning management system, LMS, employee, manager, admin"/>
+    <meta name="keywords" content="learning management system, LMS, employee, manager, admin" />
     <meta name="author" content="Danielle Smalley, me@daniellethedev.com" />
     <meta name="description" content="A learning management system site for coding bootcamp students and recent coding bootcamp grads entering the workforce" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <!--Added for responsive data tables-->
+    <link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.2.1/css/responsive.dataTables.min.css" rel="stylesheet" />
     @*<link rel="manifest" href="/site.webmanifest">*@
     @Styles.Render("~/Content/css")
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
@@ -41,81 +44,81 @@
             <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="navbar-toggler-success">
                 <div class="flex-fill mx-xl-5 mb-2">
                     @*<div class="collapse navbar-collapse" id="navbarNavDropdown">*@
-                        <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-center text-dark">
-                            <li class="nav-item">
-                                <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Index", "Home")">Home</a>
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-center text-dark">
+                        <li class="nav-item">
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Index", "Home")">Home</a>
+                        </li>
+
+                        @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager") || User.IsInRole("Employee"))
+                        {
+                            <li class="nav-item dropdown btn-outline-primary rounded-pill px-3">
+                                <a class="nav-item nav-link rounded-pill px-3 dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Courses
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="@Url.Action("Index", "Courses")">Courses</a>
+                                    @if (Request.IsAuthenticated && User.IsInRole("HRAdmin") || User.IsInRole("Manager") || User.IsInRole("Admin"))
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action("Index", "CourseCompletions")">Completed Courses</a>
+                                    }
+                                    @if (Request.IsAuthenticated && User.IsInRole("Employee"))
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action("EmployeeProgress", "CourseCompletions")">Course Completion Progress</a>
+                                    }
+                                </div>
                             </li>
+                        }
 
-                            @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager") || User.IsInRole("Employee"))
-                            {
-                                <li class="nav-item dropdown btn-outline-primary rounded-pill px-3">
-                                    <a class="nav-item nav-link rounded-pill px-3 dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Courses
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="@Url.Action("Index", "Courses")">Courses</a>
-                                        @if (Request.IsAuthenticated && User.IsInRole("HRAdmin") || User.IsInRole("Manager") || User.IsInRole("Admin"))
-                                        {
-                                            <a class="dropdown-item" href="@Url.Action("Index", "CourseCompletions")">Completed Courses</a>
-                                        }
-                                            @if (Request.IsAuthenticated && User.IsInRole("Employee"))
-                                            {
-                                                <a class="dropdown-item" href="@Url.Action("EmployeeProgress", "CourseCompletions")">Course Completion Progress</a>
-                                            }
-                                        </div>
-                                </li>
-                            }
-
-                            @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager") || User.IsInRole("Employee"))
-                            {
-                                <li class="nav-item dropdown btn-outline-primary rounded-pill px-3">
-                                    <a class="nav-item nav-link  rounded-pill px-3 dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Lessons
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="@Url.Action("Index", "Lessons")">Lessons</a>
-                                        @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager"))
-                                        {
-                                            <a class="dropdown-item" href="@Url.Action("Index", "LessonViews")">Lesson Views</a>
-                                        }
-                                            @if (Request.IsAuthenticated && User.IsInRole("Employee"))
-                                            {
-                                                <a class="dropdown-item" href="@Url.Action("EmployeeProgress", "LessonViews")">Lesson Progress</a>
-                                            }
-                                        </div>
-                                </li>
-                            }
-
-                            @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Index", "UserDetails")">User Details</a>
-                                </li>
-                            }
-
-                            <li class="nav-item">
-                                <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Contact", "Home")">Contact</a>
+                        @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager") || User.IsInRole("Employee"))
+                        {
+                            <li class="nav-item dropdown btn-outline-primary rounded-pill px-3">
+                                <a class="nav-item nav-link  rounded-pill px-3 dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Lessons
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="@Url.Action("Index", "Lessons")">Lessons</a>
+                                    @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager"))
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action("Index", "LessonViews")">Lesson Views</a>
+                                    }
+                                    @if (Request.IsAuthenticated && User.IsInRole("Employee"))
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action("EmployeeProgress", "LessonViews")">Lesson Progress</a>
+                                    }
+                                </div>
                             </li>
+                        }
 
-                            @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
-                            {
-                                <li class="nav-item dropdown btn-outline-primary rounded-pill px-3">
-                                    <a class="nav-item nav-link  rounded-pill px-3 dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Admin
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="@Url.Action("Index", "RolesAdmin")">Roles</a>
-                                        <a class="dropdown-item" href="@Url.Action("Index", "UsersAdmin")">Users</a>
-                                    </div>
-                                </li>
-                            }
-                           
-                            @Html.Partial("_LoginPartial")
-                        </ul>
-                    </div>
+                        @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Index", "UserDetails")">User Details</a>
+                            </li>
+                        }
 
+                        <li class="nav-item">
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Contact", "Home")">Contact</a>
+                        </li>
+
+                        @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
+                        {
+                            <li class="nav-item dropdown btn-outline-primary rounded-pill px-3">
+                                <a class="nav-item nav-link  rounded-pill px-3 dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Admin
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="@Url.Action("Index", "RolesAdmin")">Roles</a>
+                                    <a class="dropdown-item" href="@Url.Action("Index", "UsersAdmin")">Users</a>
+                                </div>
+                            </li>
+                        }
+
+                        @Html.Partial("_LoginPartial")
+                    </ul>
                 </div>
+
             </div>
+        </div>
         </div>
     </nav>
     <!-- Close Header -->
@@ -178,9 +181,6 @@
                         <li class="pb-2">
                             <i class='bx-fw bx bxs-chevron-right bx-xs'></i><a class="text-decoration-none text-light py-1" href="#">Our Work</a>
                         </li>
-                        @*<li class="pb-2">
-                            <i class='bx-fw bx bxs-chevron-right bx-xs'></i></i><a class="text-decoration-none text-light py-1" href="pricing.html">Price</a>
-                        </li>*@
                         <li class="pb-2">
                             <i class='bx-fw bx bxs-chevron-right bx-xs'></i><a class="text-decoration-none text-light py-1" href="@Url.Action("Contact", "Home")">Contact</a>
                         </li>
@@ -196,18 +196,9 @@
                         <li class="pb-2">
                             <i class='bx-fw bx bxs-chevron-right bx-xs'></i><a class="text-decoration-none text-light py-1" href="#">Business</a>
                         </li>
-                        @*<li class="pb-2">
-                            <i class='bx-fw bx bxs-chevron-right bx-xs'></i><a class="text-decoration-none text-light py-1" href="#">Marketing</a>
-                        </li>
-                        <li class="pb-2">
-                            <i class='bx-fw bx bxs-chevron-right bx-xs'></i><a class="text-decoration-none text-light py-1" href="#">Social Media</a>
-                        </li>*@
                         <li class="pb-2">
                             <i class='bx-fw bx bxs-chevron-right bx-xs'></i><a class="text-decoration-none text-light py-1" href="#">Digital Solutions</a>
                         </li>
-                        @*<li class="pb-2">
-                            <i class='bx-fw bx bxs-chevron-right bx-xs'></i><a class="text-decoration-none text-light py-1" href="#">Graphic</a>
-                        </li>*@
                     </ul>
                 </div>
 
@@ -251,10 +242,17 @@
     </footer>
     <!-- End Footer -->
     <!-- Bootstrap -->
-    <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+    @*<script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>*@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/bootstrap")
-    <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+    @*<script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>*@
+
+    <!--Added for datatables mobileresponsiveness-->
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>*@
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
+
+    <!--TODO: This is jquery/JS number 1-->
     <script>
         $(window).load(function () {
             // init Isotope
@@ -276,6 +274,19 @@
         });
             //if I end up wanting this in index but not shared, can put this in an at section scripts { }
     </script>
+
+    <!--This ended up looking really ugly and didn't have enough time to fix styling-->
+    @*<script>
+            $(function () {
+                $('div.align-self-center ul.nav li.nav-item').each(
+                    function () {
+                        if ($(this).find('a').attr('href') == window.location.pathname) {
+                            $(this).addClass("active");
+                        }
+                    }
+                )
+            });
+        </script>*@
 
     @RenderSection("scripts", required: false)
 

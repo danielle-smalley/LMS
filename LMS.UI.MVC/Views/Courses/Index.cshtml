@@ -3,10 +3,11 @@
 @{
     ViewBag.Title = "Course Catalog";
 }
-<br/>
+
+<br />
 <div class="container">
     <h2 class="text-center">@ViewBag.Title</h2>
-    <br/>
+    <br />
     @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
     {
         <p class="text-center">
@@ -17,9 +18,9 @@
             @*@Html.ActionLink("Create New", "Create")*@
             <a href="@Url.Action("IndexInactiveOnly", "Courses")" class="btn btn-light text-center">View Inactive Courses</a>
         </p>
-        <br/>
+        <br />
     }
-    <table class="table table-dark" id="data-table">
+    <table class="table table-dark display" id="data-table">
         <thead>
             <tr>
                 <th>
@@ -56,12 +57,12 @@
                     </td>
                     <td>
                         @if (item.hasCompleted == true)
-	                        {
-		                           <span>Completed</span>
+                        {
+                            <span>Completed</span>
                         }
                         else
                         {
-                                   <span>Incomplete</span>
+                            <span>Incomplete</span>
                         }
                     </td>
 
@@ -72,8 +73,8 @@
                         @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
                         {
 
-                            @Html.ActionLink("Edit Course", "Edit", new { id = item.CourseId }, new { @class = "btn btn-warning" }) 
-                            <br/>
+                            @Html.ActionLink("Edit Course", "Edit", new { id = item.CourseId }, new { @class = "btn btn-warning" })
+                
                             @Html.ActionLink("Delete", "Delete", new { id = item.CourseId }, new { @class = "btn btn-danger" })
                         }
                     </td>
@@ -82,11 +83,11 @@
         </tbody>
     </table>
 </div>
-
+<!--TODO: This is jquery/JS number 2 (repeated for all tables/views)-->
 @section scripts{
     <script>
         $(document).ready(function () {
-            $('#data-table').DataTable();
+            $('#data-table.display').DataTable({ responsive: true });
         });
     </script>
 }

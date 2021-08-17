@@ -5,13 +5,13 @@
 }
 
 <div class="container">
-    <br/>
+    <br />
     <h2 class="text-center">@ViewBag.Title</h2>
-    <br/>
+    <br />
     @*<p>
             @Html.ActionLink("Create New", "Create")
         </p>*@
-    <table class="table table-primary" id="data-table">
+    <table class="table table-primary display" id="data-table">
         <thead>
             <tr>
                 <th>
@@ -48,15 +48,15 @@
             }
         </tbody>
     </table>
-    <br/>
-    <br/>
-    <br/>
+    <br />
+    <br />
+    <br />
 </div>
 
 @section scripts{
     <script>
         $(document).ready(function () {
-            $('#data-table').DataTable();
+            $('#data-table.display').DataTable({ responsive: true });
         });
     </script>
 }

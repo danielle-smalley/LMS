@@ -22,7 +22,7 @@
         </p>
         <br />
     }
-    <table class="table table-primary" id="data-table">
+    <table class="table table-primary display" id="data-table">
         <thead>
             <tr>
                 <th>
@@ -104,7 +104,7 @@
 @section scripts{
     <script>
         $(document).ready(function () {
-            $('#data-table').DataTable();
+            $('#data-table.display').DataTable({ responsive: true });
         });
     </script>
 }
