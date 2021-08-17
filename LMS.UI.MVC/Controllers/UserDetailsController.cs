@@ -15,14 +15,14 @@ namespace LMS.UI.MVC.Controllers
         private LMSEntities db = new LMSEntities();
 
         // GET: UserDetails
-        [Authorize(Roles = "Admin, HRAdmin, Manager")]
+        [Authorize(Roles = "Admin, HRAdmin")]
         public ActionResult Index()
         {
             return View(db.UserDetails.ToList());
         }
 
         // GET: UserDetails/Details/5
-        [Authorize(Roles = "Admin, HRAdmin, Manager")]
+        [Authorize(Roles = "Admin, HRAdmin")]
         public ActionResult Details(string id)
         {
             if (id == null)

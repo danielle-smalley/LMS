@@ -86,7 +86,7 @@
                                 </li>
                             }
 
-                            @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager"))
+                            @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link btn-outline-primary rounded-pill px-3" href="@Url.Action("Index", "UserDetails")">User Details</a>
