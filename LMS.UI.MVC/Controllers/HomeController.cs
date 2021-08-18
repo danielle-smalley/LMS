@@ -4,6 +4,7 @@ using System; //had to add for the try/catch for Exception
 using System.Configuration; //added this so I can update mailmessage to ConfigurationManager instead of our pers info
 using System.Net; //added this for client credentials for email
 using System.Net.Mail; //added this so I can set up email (mailmessage)
+using reCAPTCHA.MVC;
 
 namespace LMS.UI.MVC.Controllers
 {
@@ -32,13 +33,18 @@ namespace LMS.UI.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Contact(ContactViewModel cvm)
+        [CaptchaValidator(PrivateKey = "6LfxmQUcAAAAAJbJdlG7IGFgC8BgeG6VwTd6uYhO", ErrorMessage = "Invalid input CAPTCHA", RequiredMessage = "Please verify you are not a robot (beep boop)")]
+        public ActionResult Contact(ContactViewModel cvm, bool captchaValid)
         {
             if (!ModelState.IsValid)
             {
                 return View(cvm);
             }
 
+            if (ModelState.IsValid && captchaValid)
+            {
+
+            
             string message = $"You have received an email from {cvm.Name} with a subject of {cvm.Subject}. Please respond to {cvm.Email} with your response to the following message: <br/> {cvm.Message}";
 
             MailMessage mm = new MailMessage(ConfigurationManager.AppSettings["EmailUser"].ToString(), ConfigurationManager.AppSettings["EmailTo"].ToString(), cvm.Subject, message);
@@ -63,6 +69,20 @@ namespace LMS.UI.MVC.Controllers
             }
 
             return View("EmailConfirmation", cvm);
+            }
+
+            return View(cvm);
         }//end contact cvm
+
+        //[HttpPost]
+        //[CaptchaValidator(PrivateKey = "6LfxmQUcAAAAAJbJdlG7IGFgC8BgeG6VwTd6uYhO", ErrorMessage = "Invalid input CAPTCHA", RequiredMessage = "Please verify you are not a robot (beep boop)")]
+        //public ActionResult Index(ContactViewModel contact, bool captchaValid)
+        //{
+        //    if (ModelState.IsValid && captchaValid)
+        //    {
+        //        return View("reCaptchaPassed");
+        //    }
+        //    return View(contact);
+        //}
     }//end class
 }//end namespace

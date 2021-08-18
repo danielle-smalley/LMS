@@ -4,7 +4,8 @@
     ViewBag.Title = "Contact Us";
 }
 
-@*@using Recaptcha.Web.Mvc;*@
+@using reCAPTCHA;
+@using reCAPTCHA.MVC;
 
 <div class="container text-center">
     <br/>
@@ -55,7 +56,12 @@
                     @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
                 </div>
             </div>
-            @*@Html.Recaptcha()*@
+            <br/>
+            @Html.Recaptcha()
+            <p style="font-weight:700;font-style:italic;" class="text-danger text-center">
+                
+                @Html.ValidationMessage("ReCaptcha")
+            </p>
             <br />
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
