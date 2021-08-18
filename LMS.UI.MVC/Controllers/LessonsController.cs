@@ -104,15 +104,11 @@ namespace LMS.UI.MVC.Controllers
                         string courseCompletedMessage = $"{completedCourse} course was completed at {completionDate:g} by {courseTaker}.";
 
                         MailMessage mmsg = new MailMessage(ConfigurationManager.AppSettings["EmailUser"].ToString(), ConfigurationManager.AppSettings["EmailTo"].ToString(), "Course Completed", courseCompletedMessage);
-                        //new MailMessage("me@daniellethedev.com", "smalley.danielle@gmail.com", "Course Completed", courseCompletedMessage);
 
                         mmsg.IsBodyHtml = true;
                         mmsg.Priority = MailPriority.High;
-                        //SmtpClient client = new SmtpClient("mail.daniellethedev.com");
-                        //client.Credentials = new NetworkCredential("me@daniellethedev.com", "   ");
 
                         SmtpClient client = new SmtpClient(ConfigurationManager.AppSettings["EmailClient"].ToString());
-                        //client.Port = 8889; - for gmail
 
                         client.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["EmailUser"].ToString(), ConfigurationManager.AppSettings["EmailPass"].ToString());
 
@@ -122,7 +118,7 @@ namespace LMS.UI.MVC.Controllers
                         }
                         catch (Exception ex)
                         {
-                            ViewBag.ErrorMessage = $"Heck, the course completion notification email could not successfully send to your manager. Please try again later. Error Message: </br> {ex.StackTrace}";
+                            ViewBag.ErrorMessage = $"Oh heck, the course completion notification email could not successfully send to your manager. Please try again later. Error Message: </br> {ex.StackTrace}";
                             throw;
                         }//end catch
 

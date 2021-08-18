@@ -31,7 +31,6 @@
             </dt>
 
             <dd>
-                @*@Html.DisplayFor(model => model.VideoURL)*@
                 @if (Model.VideoURL == null)
                 {
                     <div>
@@ -42,16 +41,11 @@
                 {
                     <iframe id="ytplayer" typeof="text/html" width="640" height="360" src="@Model.VideoURL" frameborder="0" title="@Model.LessonTitle lesson video"></iframe>
                 }
-
             </dd>
-
             <dt>
                 @Html.DisplayNameFor(model => model.PdfFile)
-                @*<a href="@Url.Content("~/Content/img/pdf/" + @Model.PdfFile)" target="_blank">Click For Lesson PDF</a>*@
             </dt>
-
             <dd>
-                @*@Html.DisplayFor(model => model.PdfFile)*@
                 <a class="btn btn-info" href="@Url.Content("~/Content/img/pdf/" + @Model.PdfFile)" target="_blank">Click For Lesson PDF</a>
             </dd>
 
