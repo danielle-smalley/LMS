@@ -23,6 +23,7 @@ namespace LMS.UI.MVC.Controllers
             return View(courseCompletions.ToList());
         }
 
+        //Code snippet #1
         //Added this logic and corresponding view so employees can see Course Completion Progress
         public ActionResult EmployeeProgress()
         {

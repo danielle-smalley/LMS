@@ -74,15 +74,5 @@ namespace LMS.UI.MVC.Controllers
             return View(cvm);
         }//end contact cvm
 
-        //[HttpPost]
-        //[CaptchaValidator(PrivateKey = "6LfxmQUcAAAAAJbJdlG7IGFgC8BgeG6VwTd6uYhO", ErrorMessage = "Invalid input CAPTCHA", RequiredMessage = "Please verify you are not a robot (beep boop)")]
-        //public ActionResult Index(ContactViewModel contact, bool captchaValid)
-        //{
-        //    if (ModelState.IsValid && captchaValid)
-        //    {
-        //        return View("reCaptchaPassed");
-        //    }
-        //    return View(contact);
-        //}
     }//end class
 }//end namespace

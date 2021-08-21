@@ -21,14 +21,21 @@ namespace LMS.UI.MVC.Controllers
         [Authorize(Roles = "Admin, HRAdmin, Manager, Employee")]
         public ActionResult Index()
         {
+            //grabbing the user id
             string userid = User.Identity.GetUserId();
+
+            //looking at lessons the user has viewed (completed), specifically looking at userid
             var completedLessons = db.LessonViews.Where(x => x.UserId == userid).ToList();
 
+            //making sure to just look at active lessons
             var activeLessons = db.Lessons.Where(l => l.IsActive == true);
+            //looping through each record in lesson views
             foreach (var item in completedLessons)
             {
+                //looping through each COMPLETED lesson in active lessons
                 foreach (var cLesson in activeLessons)
                 {
+                    //marking lessons as complete
                     if (cLesson.LessonId == item.LessonId)
                     {
                         cLesson.hasCompleted = true;
@@ -48,7 +55,7 @@ namespace LMS.UI.MVC.Controllers
             return View(inactiveLessons.ToList());
         }
 
-        // GET: Lessons/Details/5
+        // GET: Lessons/Details/5 **********************************************************************
         [Authorize(Roles = "Admin, HRAdmin, Manager, Employee")]
         public ActionResult Details(int id)
         {
@@ -57,52 +64,68 @@ namespace LMS.UI.MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+
             Lesson lesson = db.Lessons.Find(id);
             if (lesson == null)
             {
                 return HttpNotFound();
             }
-
+            //***********************************
             if (lesson != null)
             {
+                //grabbing userid
                 string userid = User.Identity.GetUserId();
-                LessonView lv = new LessonView();
-                lv.UserId = userid;
+
+                //creating local variable of type LessonView
+                LessonView lv = new LessonView();  //object initialization
+                lv.UserId = userid; //doing our get; set; here and below
                 lv.LessonId = id;
-                lv.DateViewed = DateTime.Now;
+                lv.DateViewed = DateTime.Now; //one of the requirements is here, by using DateTime.Now to record the time the user completes a lesson. This is also used for courses to mark once a course has been completed, this info sends in an email to the manager.
 
 
-
+                //looking for when a lesson is first viewed (hasn't been viewed previously)
                 var firstView = db.LessonViews.Where(x => x.LessonId == id && x.UserId == userid).FirstOrDefault();
-                if (User.IsInRole("Employee") && firstView == null)
+                if (User.IsInRole("Employee") && firstView == null) //lesson and course completions are only required for employees
                 {
                     db.LessonViews.Add(lv);
-                    db.SaveChanges();
+                    db.SaveChanges(); //adding a lesson view record and updating the DB
                 }
 
 
+                //Below, I'm now comparing the count of active lessons completed vs count of active courses completed
                 int coursesToLessonCount = db.Lessons.Where(x => x.CourseId == lesson.CourseId && x.IsActive == true).Count();
                 int coursesCompletedCount = db.LessonViews.Where(x => x.Lesson.CourseId == lesson.CourseId && x.UserId == userid && x.Lesson.IsActive == true).Count();
 
+                //if the number of completed lessons in a course is equal to the number of lessons in a course
                 if (User.IsInRole("Employee") && coursesToLessonCount == coursesCompletedCount)
                 {
-                    CourseCompletion completion = new CourseCompletion();
+                    //creating local variable of class CourseCompletion
+                    CourseCompletion completion = new CourseCompletion(); //object initialization
                     completion.UserId = userid;
-                    completion.CourseId = lesson.CourseId;
-                    completion.DateCompleted = DateTime.Now;
+                    completion.CourseId = lesson.CourseId; //getting; setting; here and above
+                    completion.DateCompleted = DateTime.Now;  //needed DateTime.Now here for course completion as well per requirements and handy for the email that sends to manager
 
-                    var firstCompletion = db.CourseCompletions.Where(x => x.UserId == userid && x.CourseId == lesson.CourseId).FirstOrDefault();
+                    var firstCompletion = db.CourseCompletions.Where(x => x.UserId == userid && x.CourseId == lesson.CourseId).FirstOrDefault(); //checking to make sure this is the first time completing the course, just like I did with lessons. This is so an employee can't view the same lessons/courses over and over to meet the 6 course completions/year.
                     if (firstCompletion == null)
                     {
                         db.CourseCompletions.Add(completion);
-                        db.SaveChanges();
+                        db.SaveChanges(); //and course completion record and save changes to DB
 
+                        //building the manager email set up:
+
+                        //finding the full name (partial class I created in the metadata to combine first & last name) of employee
                         string courseTaker = db.UserDetails.Where(x => x.UserId == userid).FirstOrDefault().FullName;
+
+                        //finding course name completed
                         string completedCourse = db.Courses.Where(x => x.CourseId == lesson.CourseId).FirstOrDefault().CourseName;
+                        
+                        //grabbing date/time course completed
                         var completionDate = completion.DateCompleted;
 
+                        //Below is the message that sends to the manager specifying course, date/time and employee name so the manager can be in the loop
                         string courseCompletedMessage = $"{completedCourse} course was completed at {completionDate:g} by {courseTaker}.";
 
+                       //setting up the email message below, using classes I defined in app secret keys config and referenced in web.config
                         MailMessage mmsg = new MailMessage(ConfigurationManager.AppSettings["EmailUser"].ToString(), ConfigurationManager.AppSettings["EmailTo"].ToString(), "Course Completed", courseCompletedMessage);
 
                         mmsg.IsBodyHtml = true;
@@ -112,6 +135,7 @@ namespace LMS.UI.MVC.Controllers
 
                         client.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["EmailUser"].ToString(), ConfigurationManager.AppSettings["EmailPass"].ToString());
 
+                        //set up a try catch, just in case the email fails to send to manager
                         try
                         {
                             client.Send(mmsg);
@@ -128,7 +152,7 @@ namespace LMS.UI.MVC.Controllers
             }//end lesson viewed
 
             return View(lesson);
-        }//end details
+        }//end Details
 
         // GET: Lessons/Create
         [Authorize(Roles = "Admin, HRAdmin")]
